@@ -20,13 +20,13 @@ use App\Http\Controllers\Student\StudentController;
 |
 */
 
-Route::resource('permissions', PermissionController::class)->middleware('role:admin');
-Route::delete('permissions/{permission}/delete', [PermissionController::class, 'destroy'])->name('permissions.destroy')->middleware('role:admin');
+Route::resource('permissions', PermissionController::class)->middleware(['role:teacher,admin']);
+Route::delete('permissions/{permission}/delete', [PermissionController::class, 'destroy'])->name('permissions.destroy')->middleware(['role:teacher,admin']);
 
-Route::resource('roles', RoleController::class)->middleware('role:admin');
-Route::delete('roles/{role}/delete', [RoleController::class, 'destroy'])->name('roles.destroy')->middleware('role:admin');
-Route::get('roles/{role}/permissions', [RoleController::class, 'permissions'])->name('roles.permissions')->middleware('role:admin');
-Route::post('roles/{role}/permissions', [RoleController::class, 'attachPermissions'])->name('roles.attachPermissions')->middleware('role:admin');
+Route::resource('roles', RoleController::class)->middleware(['role:teacher,admin']);
+Route::delete('roles/{role}/delete', [RoleController::class, 'destroy'])->name('roles.destroy')->middleware(['role:teacher,admin']);
+Route::get('roles/{role}/permissions', [RoleController::class, 'permissions'])->name('roles.permissions')->middleware(['role:teacher,admin']);
+Route::post('roles/{role}/permissions', [RoleController::class, 'attachPermissions'])->name('roles.attachPermissions')->middleware(['role:teacher,admin']);
 
 /* admin routes */
 Route::middleware('admin')->group(function () {
