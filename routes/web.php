@@ -41,3 +41,7 @@ Route::get('admin', function () {
 
 require __DIR__.'/auth.php';
 require __DIR__.'/admin.php';
+
+Route::get('datapoin', function () {
+    return view('poin.index');
+});

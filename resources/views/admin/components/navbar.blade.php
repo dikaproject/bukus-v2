@@ -18,12 +18,26 @@
                     <li class="nxl-item nxl-hasmenu">
                         <a href="javascript:void(0);" class="nxl-link">
                             <span class="nxl-micon"><i class="feather-airplay"></i></span>
-                            <span class="nxl-mtext">Dashboards</span><span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
+                            <span class="nxl-mtext">Dashboards</span><span class="nxl-arrow"></span>
                         </a>
-                        <ul class="nxl-submenu">
-                            <li class="nxl-item"><a class="nxl-link" href="index.html">Admin Dashboard</a></li>
-                            <li class="nxl-item"><a class="nxl-link" href="analytics.html">Kasir Dashboard</a></li>
-                        </ul>
+                    </li>
+                    <li class="nxl-item nxl-hasmenu">
+                        <a href="javascript:void(0);" class="nxl-link">
+                            <span class="nxl-micon"><i class="feather-book"></i></span>
+                            <span class="nxl-mtext">Pasal</span><span class="nxl-arrow"></span>
+                        </a>
+                    </li>
+                    <li class="nxl-item nxl-hasmenu">
+                        <a href="javascript:void(0);" class="nxl-link">
+                            <span class="nxl-micon"><i class="feather-user"></i></span>
+                            <span class="nxl-mtext">Siswa</span><span class="nxl-arrow"></span>
+                        </a>
+                    </li>
+                    <li class="nxl-item nxl-hasmenu">
+                        <a href="javascript:void(0);" class="nxl-link">
+                            <span class="nxl-micon"><i class="feather-file"></i></span>
+                            <span class="nxl-mtext">Data Poin</span><span class="nxl-arrow"></span>
+                        </a>
                     </li>
                     <li class="nxl-item nxl-hasmenu">
                         <a href="javascript:void(0);" class="nxl-link">
@@ -35,6 +49,16 @@
                             <li class="nxl-item"><a class="nxl-link" href="settings-roles.html">API Gateway</a></li>
                             <li class="nxl-item"><a class="nxl-link" href="{{ route('permissions.index') }}">Permissions</a></li>
                             <li class="nxl-item"><a class="nxl-link" href="{{ route('roles.index') }}">Roles</a></li>
+                        </ul>
+                    </li>
+                    <li class="nxl-item nxl-hasmenu">
+                        <a href="javascript:void(0);" class="nxl-link">
+                            <span class="nxl-micon"><i class="feather-users"></i></span>
+                            <span class="nxl-mtext">Profile</span><span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
+                        </a>
+                        <ul class="nxl-submenu">
+                            <li class="nxl-item"><a class="nxl-link" href="index.html">Admin Dashboard</a></li>
+                            <li class="nxl-item"><a class="nxl-link" href="analytics.html">Kasir Dashboard</a></li>
                         </ul>
                     </li>
                 </ul>
