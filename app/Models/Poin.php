@@ -9,8 +9,10 @@ class Poin extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'nis', 'nama', 'kelas', 'kode', 'jenis', 'pelanggaran', 'poin', 'konfirmasi',
-        'bukti', 'status_bukti', 'tanggal', 'pelapor', 'pesan'
-    ];
+    protected $fillable = ['nis', 'nama', 'kelas', 'kode', 'jenis', 'pelanggaran', 'poin', 'konfirmasi', 'bukti', 'status_bukti', 'tanggal', 'pelapor', 'pesan'];
+
+    public function student()
+    {
+        return $this->belongsTo(Student::class, 'nis', 'nis');
+    }
 }

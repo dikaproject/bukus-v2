@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('nis');
+            $table->unsignedBigInteger('nis')->unique();
             $table->string('name');
             $table->date('tanggal');
             $table->string('email')->nullable();
@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('tpoin')->nullable();
             $table->string('aksi')->nullable();
             $table->string('pesan')->nullable();
+            $table->integer('bintang')->default(0);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('token')->nullable();
             $table->softDeletes();

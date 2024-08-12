@@ -11,7 +11,7 @@
                     <h5 class="m-b-10">Roles</h5>
                 </div>
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('admin_dashboard') }}">Home</a></li>
                     <li class="breadcrumb-item">Roles</li>
                 </ul>
             </div>

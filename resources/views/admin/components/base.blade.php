@@ -10,7 +10,7 @@
     <meta name="author" content="flexilecode" />
     <!--! The above 6 meta tags *must* come first in the head; any other head content must come *after* these tags !-->
     <!--! BEGIN: Apps Title-->
-    <title>Cafe Management || Dashboard</title>
+    <title>Admin BukuSaku-v2 || Dashboard</title>
     <!--! END:  Apps Title-->
     <!--! BEGIN: Favicon-->
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/images/favicon.ico')}}" />
@@ -21,10 +21,23 @@
     <!--! END: Bootstrap CSS-->
     <!--! BEGIN: Vendors CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/css/vendors.min.css')}}" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/css/daterangepicker.min.css')}}" />
     <!--! END: Vendors CSS-->
     <!--! BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/theme.min.css')}}" />
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        .nxl-container {
+            min-height: 100%; /* Make main container take min height of 100% */
+            display: flex;
+            flex-direction: column;
+        }
+        footer { /* Assuming you have footer inside .footer or use correct selector */
+            margin-top: auto; /* Push footer to the bottom */
+        }
+    </style>
     <!--! END: Custom CSS-->
     <!--! HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries !-->
     <!--! WARNING: Respond.js doesn"t work if you view the page via file: !-->
@@ -45,6 +58,7 @@
         @yield('dashboard')
         @yield('permissions')
         @yield('roles')
+        @yield('content')
 
         {{-- footer --}}
         @include('admin.components.footer')

@@ -7,6 +7,9 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Student\StudentAuthController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\PasalController;
+use App\Http\Controllers\Admin\PoinController;
+use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Student\StudentController;
 
 /*
@@ -55,3 +58,11 @@ Route::prefix('siswa')->group(function () {
 // CRUD Student and Teacher / admin
 Route::resource('admins', AdminController::class);
 Route::resource('students', StudentController::class);
+
+// CRUD System
+Route::resource('poin', PoinController::class);
+Route::resource('pasal', PasalController::class);
+
+
+// Rekap Controller settings
+Route::get('/settings/poins-berbintang', [SettingsController::class, 'showPoinBerbintang'])->name('settings.poins-berbintang');

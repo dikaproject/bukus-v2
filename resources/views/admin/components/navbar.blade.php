@@ -22,7 +22,7 @@
                         </a>
                     </li>
                     <li class="nxl-item nxl-hasmenu">
-                        <a href="javascript:void(0);" class="nxl-link">
+                        <a href="{{ route('pasal.index') }}" class="nxl-link">
                             <span class="nxl-micon"><i class="feather-book"></i></span>
                             <span class="nxl-mtext">Pasal</span><span class="nxl-arrow"></span>
                         </a>
@@ -34,7 +34,7 @@
                         </a>
                     </li>
                     <li class="nxl-item nxl-hasmenu">
-                        <a href="javascript:void(0);" class="nxl-link">
+                        <a href="{{ route('poin.index') }}" class="nxl-link">
                             <span class="nxl-micon"><i class="feather-file"></i></span>
                             <span class="nxl-mtext">Data Poin</span><span class="nxl-arrow"></span>
                         </a>
@@ -46,20 +46,19 @@
                         </a>
                         <ul class="nxl-submenu">
                             <li class="nxl-item"><a class="nxl-link" href="settings.html">General Settings</a></li>
-                            <li class="nxl-item"><a class="nxl-link" href="settings-roles.html">API Gateway</a></li>
                             <li class="nxl-item"><a class="nxl-link" href="{{ route('permissions.index') }}">Permissions</a></li>
                             <li class="nxl-item"><a class="nxl-link" href="{{ route('roles.index') }}">Roles</a></li>
+                            <li class="nxl-item"><a class="nxl-link" href="settings-roles.html">Rekap Data Prestasi</a></li>
+                            <li class="nxl-item"><a class="nxl-link" href="{{ route('settings.poins-berbintang') }}">Rekap Siswa Berbintang</a></li>
+                            <li class="nxl-item"><a class="nxl-link" href="settings-roles.html">Rekap Data Pelanggaran</a></li>
+                            <li class="nxl-item"><a class="nxl-link" href="settings-roles.html">Rekap Data Siswa</a></li>
                         </ul>
                     </li>
                     <li class="nxl-item nxl-hasmenu">
-                        <a href="javascript:void(0);" class="nxl-link">
-                            <span class="nxl-micon"><i class="feather-users"></i></span>
-                            <span class="nxl-mtext">Profile</span><span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
+                        <a href="{{ route('poin.index') }}" class="nxl-link">
+                            <span class="nxl-micon"><i class="feather-alert-triangle"></i></span>
+                            <span class="nxl-mtext">Konfirmasi Poins</span><span class="nxl-arrow"></span>
                         </a>
-                        <ul class="nxl-submenu">
-                            <li class="nxl-item"><a class="nxl-link" href="index.html">Admin Dashboard</a></li>
-                            <li class="nxl-item"><a class="nxl-link" href="analytics.html">Kasir Dashboard</a></li>
-                        </ul>
                     </li>
                 </ul>
             </div>

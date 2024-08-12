@@ -17,9 +17,15 @@ class UserSeeder extends Seeder
     {
         User::create([
             'name' => 'Admin',
-            'email' => 'admin@smktelkom-pwt.sch.id',
-            'password' => bcrypt('password'),
+            'email' => 'admin@gmail.com',
+            'password' => bcrypt('password1234'),
         ])->assignRole('admin');
+
+        User::create([
+            'name' => 'Leader',
+            'email' => 'leader@smktelkom-pwt.sch.id',
+            'password' => bcrypt('password'),
+        ])->assignRole('leader');
 
         Admin::create([
             'nik' => '51238930033',
@@ -29,6 +35,15 @@ class UserSeeder extends Seeder
             'email' => 'teacher@smktelkom-pwt.sch.id',
             'password' => bcrypt('password'),
         ])->assignRole('teacher');
+
+        Admin::create([
+            'nik' => '512382332323',
+            'name' => 'Walas',
+            'jabatan' => 'Guru',
+            'sekolah' => 'SMK Telkom Purwokerto',
+            'email' => 'walas@smktelkom-pwt.sch.id',
+            'password' => bcrypt('password'),
+        ])->assignRole('walas');
 
         Student::create([
             'name' => 'Student',

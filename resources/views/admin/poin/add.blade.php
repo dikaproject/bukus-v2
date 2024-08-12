@@ -1,8 +1,8 @@
 @extends('admin.components.base')
 
-@section('title', 'dashboard')
+@section('title', 'Add Poins')
 
-@section('dashboard')
+@section('content')
 
 <div class="nxl-content">
     <!-- [ page-header ] start -->
@@ -36,77 +36,40 @@
     <!-- [ Main Content ] start -->
     <div class="main-content">
         <div class="row">
-            <div class="col-lg-12">
-                <div class="card border-top-0">
-                    <div class="tab-content">
-                        <div class="tab-pane fade show active" id="profileTab" role="tabpanel">
-                            <div class="card-body personal-info">
-                                <div class="mb-4 d-flex align-items-center justify-content-between">
-                                    <h5 class="fw-bold mb-0 me-4">
-                                        <span class="d-block mb-2">Tambah Poin Siswa</span>
-                                        <span class="fs-12 fw-normal text-muted text-truncate-1-line">Mohon Jangan Asal
-                                            Melakukan Tambah Poin </span>
-                                    </h5>
-                                </div>
-                                                                <form action="{{ route('permissions.store') }}" method="POST">
-                                    @csrf
-                                    <div class="row mb-4 align-items-center">
-                                        <div class="col-lg-4">
-                                            <label for="nama_siswa" class="fw-semibold">Nama Siswa: </label>
-                                        </div>
-                                        <div class="col-lg-8">
-                                            <select name="nama_siswa" class="form-control select2" id="nama_siswa">
-                                                <!-- Options will be populated dynamically -->
-                                                <option value="siswa1">Siswa 1</option>
-                                                <option value="siswa2">Siswa 2</option>
-                                                <!-- Add more options as needed -->
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-4 align-items-center">
-                                        <div class="col-lg-4">
-                                            <label for="kode_pasal" class="fw-semibold">Kode Pasal: </label>
-                                        </div>
-                                        <div class="col-lg-8">
-                                            <select name="kode_pasal" class="form-control select2" id="kode_pasal">
-                                                <!-- Options will be populated dynamically -->
-                                                <option value="pasal1">Pasal 1</option>
-                                                <option value="pasal2">Pasal 2</option>
-                                                <!-- Add more options as needed -->
-                                            </select>
-                                        </div>
-                                    </div>
-                                   
-                                </form>
-                                <form action="{{ route('permissions.store') }}" method="POST">
-                                    @csrf
-                                    <div class="row mb-4 align-items-center">
-                                        <div class="col-lg-4">
-                                            <label for="name" class="fw-semibold">Bukti </label>
-                                        </div>
-                                        <div class="col-lg-8">
-                                            <div class="input-group">
-                                                <div class="input-group-text"><i class="feather-user"></i></div>
-                                                <input type="text" name="name" class="form-control" id="name"
-                                                    placeholder="Bukti">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="d-flex align-items-center justify-end gap-4 page-header-right-items-wrapper">
-                                        {{-- <a href="" class="btn btn-primary successAlertMessage">
-                                        <i class="feather-user-plus me-2"></i>
-                                        <span>Create Permissions</span>
-                                    </a> --}}
-                                       
-                                    </div>
-                                    <button type="submit" class="btn btn-primary ">
-                                        <i class="feather-user-plus me-2"></i>
-                                        <span>Tambah Poin</span>
-                                    </button>
-                                </form>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Add Points to Student</h5>
+                    </div>
+                    <div class="card-body">
+                        <form action="{{ route('poin.store') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="student" class="form-label">Student Name</label>
+                                <select name="nama" id="student" class="form-select">
+                                    @foreach ($students as $student)
+                                        <option value="{{ $student->name }}">{{ $student->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                        </div>
+                            <div class="mb-3">
+                                <label for="pasal" class="form-label">Pasal Code</label>
+                                <select name="kode" id="pasal" class="form-select">
+                                    @foreach ($pasals as $pasal)
+                                        <option value="{{ $pasal->kode }}">{{ $pasal->kode }} - {{ $pasal->keterangan }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="bukti" class="form-label">Evidence</label>
+                                <input type="text" name="bukti" id="bukti" class="form-control">
+                            </div>
+                            <div class="mb-3">
+                                <label for="pesan" class="form-label">Message (Optional)</label>
+                                <textarea name="pesan" id="pesan" class="form-control"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit Points</button>
+                        </form>
                     </div>
                 </div>
             </div>

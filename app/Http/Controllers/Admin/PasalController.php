@@ -34,6 +34,37 @@ class PasalController extends Controller
 
         Swal::toast('Pasal created successfully.', 'success')->timerProgressBar();
 
-        return redirect()->route('admin.pasal.index');
+        return redirect()->route('pasal.index');
+    }
+
+    public function edit(Pasal $pasal)
+    {
+        return view('admin.pasal.edit', compact('pasal'));
+    }
+
+    public function update(Request $request, Pasal $pasal)
+    {
+        $request->validate([
+            'jenis' => 'required',
+            'kategori' => 'required',
+            'kode' => 'required',
+            'poin' => 'required',
+            'keterangan' => 'required',
+        ]);
+
+        $pasal->update($request->all());
+
+        Swal::toast('Pasal updated successfully.', 'success')->timerProgressBar();
+
+        return redirect()->route('pasal.index');
+    }
+
+    public function destroy(Pasal $pasal)
+    {
+        $pasal->delete();
+
+        Swal::toast('Pasal deleted successfully.', 'success')->timerProgressBar();
+
+        return redirect()->route('pasal.index');
     }
 }
