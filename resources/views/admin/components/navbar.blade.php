@@ -55,9 +55,15 @@
                         </ul>
                     </li>
                     <li class="nxl-item nxl-hasmenu">
-                        <a href="{{ route('poin.index') }}" class="nxl-link">
+                        <a href="{{ route('poin.confirm.index') }}" class="nxl-link">
                             <span class="nxl-micon"><i class="feather-alert-triangle"></i></span>
                             <span class="nxl-mtext">Konfirmasi Poins</span><span class="nxl-arrow"></span>
+                        </a>
+                    </li>
+                    <li class="nxl-item nxl-hasmenu">
+                        <a href="{{ route('admin.pindahkelas.index') }}" class="nxl-link">
+                            <span class="nxl-micon"><i class="feather-shuffle"></i></span>
+                            <span class="nxl-mtext">Pindah Kelas</span><span class="nxl-arrow"></span>
                         </a>
                     </li>
                 </ul>

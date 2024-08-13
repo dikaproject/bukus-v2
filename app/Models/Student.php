@@ -20,7 +20,7 @@ class Student extends Authenticatable
      * @var array<int, string>
      */
     protected $guard = 'student';
-    protected $fillable = ['name', 'nis', 'password', 'token'];
+    protected $fillable = ['name', 'nis', 'password', 'token', 'email', 'kelas', 'jurusan', 'angkatan', 'sekolah', 'tanggal'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -42,6 +42,22 @@ class Student extends Authenticatable
     public function poins()
     {
         return $this->hasMany(Poin::class, 'nis', 'nis');
+    }
+
+    public function totalConfirmedPrestasiPoints()
+    {
+        return $this->poins()->where('jenis', 'Prestasi')->where('konfirmasi', 'Benar')->sum('poin');
+    }
+
+    public function calculateStars()
+    {
+        $netPoints = $this->tpoin;
+        if ($netPoints >= 100) return 5;
+        elseif ($netPoints >= 85) return 4;
+        elseif ($netPoints >= 70) return 3;
+        elseif ($netPoints >= 50) return 2;
+        elseif ($netPoints >= 30) return 1;
+        else return 0;
     }
 
     public function getTotalPrestasiAttribute()

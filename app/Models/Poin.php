@@ -15,4 +15,9 @@ class Poin extends Model
     {
         return $this->belongsTo(Student::class, 'nis', 'nis');
     }
+
+    public function isConfirmed()
+    {
+        return $this->konfirmasi === 'Benar';
+    }
 }

@@ -75,10 +75,12 @@
                             </a>
 
                             <div class="dropdown-divider"></div>
-                            <a href="./auth-login-minimal.html" class="dropdown-item">
-                                <i class="feather-log-out"></i>
-                                <span>Logout</span>
-                            </a>
+                            <form method="POST" action="{{ route('student_logout') }}" style="display: inline;">
+                                @csrf
+                                <button type="submit" class="btn btn-link dropdown-item">
+                                    <i class="feather-log-out"></i> Logout
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>

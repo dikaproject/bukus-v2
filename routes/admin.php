@@ -7,10 +7,12 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Student\StudentAuthController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\ClassTransferController;
 use App\Http\Controllers\Admin\PasalController;
 use App\Http\Controllers\Admin\PoinController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\StudentController;
+use App\Http\Controllers\Student\StudentProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +62,8 @@ Route::resource('admins', AdminController::class);
 
 // CRUD System
 Route::resource('poin', PoinController::class);
+Route::get('poins/confirm', [PoinController::class, 'confirmIndex'])->name('poin.confirm.index');
+Route::get('poins/confirm/{id}', [PoinController::class, 'confirmPoin'])->name('poin.confirm');
 Route::resource('pasal', PasalController::class);
 
 // Pasal Import Excel
@@ -73,8 +77,14 @@ Route::get('/settings/poins-berbintang', [SettingsController::class, 'showPoinBe
 Route::resource('students', StudentController::class);
 Route::post('students/import', [StudentController::class, 'import'])->name('students.import');
 
+Route::middleware('auth:student')->group(function () {
+    Route::get('/complete-profile', [StudentProfileController::class, 'edit'])->name('students.complete.profile');
+    Route::post('/complete-profile', [StudentProfileController::class, 'update'])->name('students.update.profile');
+});
 
 
-
+// Pindah Kelas Route
+Route::get('admin/pindahkelas', [ClassTransferController::class, 'index'])->name('admin.pindahkelas.index');
+Route::post('admin/pindahkelas', [ClassTransferController::class, 'store'])->name('admin.pindahkelas.store');
 
 

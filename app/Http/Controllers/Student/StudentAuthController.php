@@ -35,10 +35,17 @@ class StudentAuthController extends Controller
             'password' => $check['password'],
         ];
 
-        if (Auth::guard('student')->attempt($data)) {
-            return redirect()->route('student_dashboard')->with('Success', 'Login Successfully.');
+        if (Auth::guard('student')->attempt($request->only('nis', 'password'))) {
+            $student = Auth::guard('student')->user();
+
+            // Check if the student's email is set, assuming email is required to complete the profile
+            if (empty($student->email)) {
+                return redirect()->route('students.complete.profile')->with('info', 'Please complete your profile.');
+            }
+
+            return redirect()->route('student_dashboard')->with('success', 'Login Successfully.');
         } else {
-            return redirect()->route('student_login')->with('Error', 'Invalid Credentials.');
+            return redirect()->route('student_login')->with('error', 'Invalid Credentials.');
         }
     }
     public function logout()

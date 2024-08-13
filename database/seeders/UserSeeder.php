@@ -46,7 +46,8 @@ class UserSeeder extends Seeder
         ])->assignRole('walas');
 
         Student::create([
-            'name' => 'Student',
+            'name' => 'Dika',
+            'email' => '',
             'jurusan' => 'Rekayasa Perangkat Lunak',
             'kelas' => 'XII RPL 1',
             'angkatan' => '2021',

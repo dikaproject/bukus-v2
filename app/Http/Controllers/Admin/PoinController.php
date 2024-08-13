@@ -9,6 +9,7 @@ use App\Models\Pasal;
 use App\Models\Student;
 use RealRashid\SweetAlert\Facades\Alert as Swal;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PoinController extends Controller
 {
@@ -64,14 +65,35 @@ class PoinController extends Controller
         return redirect()->route('poin.index');
     }
 
+    // Display points waiting for confirmation
+    public function confirmIndex()
+    {
+        $poins = Poin::where('konfirmasi', 'Belum')->with('student')->get();
+        return view('admin.confirmpoin.index', compact('poins'));
+    }
+
+    // Confirm points
+    public function confirmPoin($id)
+    {
+        $poin = Poin::findOrFail($id);
+        $poin->konfirmasi = 'Benar';
+        $poin->save();
+
+        $student = $poin->student;
+        $this->updateStudentPoints($student);
+
+        Alert::success('Confirmed', 'Poin has been successfully confirmed.');
+        return redirect()->route('poin.confirm.index');
+    }
+
+    // Helper function to update the student's points upon confirmation
     private function updateStudentPoints(Student $student)
     {
-        $totalPrestasi = Poin::where('nis', $student->nis)->where('jenis', 'Prestasi')->sum('poin');
-        $totalHukuman = Poin::where('nis', $student->nis)->where('jenis', 'Hukuman')->sum('poin');
-        $netPoints = $totalPrestasi - $totalHukuman;
+        $totalPrestasi = $student->poins()->where('jenis', 'Prestasi')->where('konfirmasi', 'Benar')->sum('poin');
+        $totalHukuman = $student->poins()->where('jenis', 'Hukuman')->where('konfirmasi', 'Benar')->sum('poin');
 
-        $student->tpoin = $netPoints;
-        $student->bintang = $this->calculateStars($netPoints);
+        $student->tpoin = $totalPrestasi - $totalHukuman;
+        $student->bintang = $this->calculateStars($student->tpoin);
         $student->save();
     }
 
