@@ -10,7 +10,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\PasalController;
 use App\Http\Controllers\Admin\PoinController;
 use App\Http\Controllers\Admin\SettingsController;
-use App\Http\Controllers\Student\StudentController;
+use App\Http\Controllers\Admin\StudentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,12 +57,24 @@ Route::prefix('siswa')->group(function () {
 
 // CRUD Student and Teacher / admin
 Route::resource('admins', AdminController::class);
-Route::resource('students', StudentController::class);
 
 // CRUD System
 Route::resource('poin', PoinController::class);
 Route::resource('pasal', PasalController::class);
 
+// Pasal Import Excel
+Route::post('pasal/import', [PasalController::class, 'PasalImportExcel'])->name('pasal.import');
 
 // Rekap Controller settings
 Route::get('/settings/poins-berbintang', [SettingsController::class, 'showPoinBerbintang'])->name('settings.poins-berbintang');
+
+
+
+Route::resource('students', StudentController::class);
+Route::post('students/import', [StudentController::class, 'import'])->name('students.import');
+
+
+
+
+
+

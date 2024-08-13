@@ -20,6 +20,14 @@
                 <i class="feather-plus me-2"></i>
                 <span>Create Pasal</span>
             </a>
+            <div class="container mt-4">
+                <h2>Upload Pasals File</h2>
+                <form id="fileUploadForm">
+                    @csrf
+                    <input type="file" name="file" required>
+                    <button type="button" onclick="uploadFile()" class="btn btn-primary">Upload</button>
+                </form>
+            </div>
         </div>
     </div>
     <!-- [ page-header ] end -->
@@ -72,4 +80,43 @@
     </div>
     <!-- [ Main Content ] end -->
 </div>
+@endsection
+
+@section('script')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+function uploadFile() {
+    const formData = new FormData(document.getElementById('fileUploadForm'));
+    Swal.fire({
+        title: 'Uploading...',
+        html: 'Please wait while the file is being uploaded.',
+        timerProgressBar: true,
+        onBeforeOpen: () => {
+            Swal.showLoading()
+        }
+    });
+
+    fetch('{{ route('pasal.import') }}', {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        Swal.close();
+        if (data.success) {
+            Swal.fire('Success', 'Pasals imported successfully', 'success').then(() => {
+                window.location.href = "{{ route('pasal.index') }}";
+            });
+        } else {
+            Swal.fire('Error', 'Failed to import pasals', 'error');
+        }
+    })
+    .catch(error => {
+        Swal.fire('Error', 'Network or server error', 'error');
+    });
+}
+</script>
 @endsection

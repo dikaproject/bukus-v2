@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('nis')->unique();
             $table->string('name');
-            $table->date('tanggal');
+            $table->date('tanggal')->nullable();
             $table->string('email')->nullable();
             $table->string('password');
             $table->string('kelas');

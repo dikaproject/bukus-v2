@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Imports\PasalsImport;
 use App\Models\Pasal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert as Swal;
 
 class PasalController extends Controller
@@ -66,5 +69,16 @@ class PasalController extends Controller
         Swal::toast('Pasal deleted successfully.', 'success')->timerProgressBar();
 
         return redirect()->route('pasal.index');
+    }
+
+    public function PasalImportExcel(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:xlsx,xls',
+        ]);
+
+        Excel::import(new PasalsImport, $request->file('file'));
+
+        return response()->json(['success' => true]);
     }
 }
