@@ -15,25 +15,39 @@
                 <li class="breadcrumb-item">Pasal</li>
             </ul>
         </div>
-        <div class="page-header-right ms-auto">
-            <a href="{{ route('pasal.create') }}" class="btn btn-primary">
+        <div class="page-header-right ms-auto d-flex align-items-center">
+            <a href="{{ route('pasal.create') }}" class="btn btn-primary me-3">
                 <i class="feather-plus me-2"></i>
                 <span>Create Pasal</span>
             </a>
-            <div class="container mt-4">
-                <h2>Upload Pasals File</h2>
-                <form id="fileUploadForm">
-                    @csrf
-                    <input type="file" name="file" required>
-                    <button type="button" onclick="uploadFile()" class="btn btn-primary">Upload</button>
-                </form>
-            </div>
         </div>
     </div>
     <!-- [ page-header ] end -->
 
+    <!-- [ Upload Form ] start -->
+    <div class="row mt-4">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Upload Pasals File</h5>
+                </div>
+                <div class="card-body">
+                    <form id="fileUploadForm">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="file" class="form-label">Choose file</label>
+                            <input type="file" name="file" id="file" class="form-control" required>
+                        </div>
+                        <button type="button" onclick="uploadFile()" class="btn btn-primary w-100">Upload</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [ Upload Form ] end -->
+
     <!-- [ Main Content ] start -->
-    <div class="main-content">
+    <div class="main-content mt-4">
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
@@ -61,17 +75,25 @@
                                             <td>{{ $pasal->poin }}</td>
                                             <td>{{ $pasal->keterangan }}</td>
                                             <td class="text-end">
-                                                <a href="{{ route('pasal.edit', $pasal->id) }}" class="btn btn-info btn-sm">Edit</a>
-                                                <form action="{{ route('pasal.destroy', $pasal->id) }}" method="POST" onsubmit="return confirm('Are you sure?')">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                                </form>
+                                                <div class="dropdown">
+                                                    <a href="javascript:void(0);" class="text-dark" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class="feather-more-vertical"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-end">
+                                                        <a href="{{ route('pasal.edit', $pasal->id) }}" class="dropdown-item"><i class="feather-edit"></i>Edit</a>
+                                                        <form action="{{ route('pasal.destroy', $pasal->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure?')">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="dropdown-item"><i class="feather-trash-2"></i>Delete</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
+                            
                         </div>
                     </div>
                 </div>
@@ -80,6 +102,27 @@
     </div>
     <!-- [ Main Content ] end -->
 </div>
+
+@endsection
+
+@section('style')
+<style>
+    /* Optional: Adjust spacing and layout for upload form and table */
+    .card {
+        margin-bottom: 20px;
+    }
+
+    /* Optional: Enhance button appearance */
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+    }
+</style>
 @endsection
 
 @section('script')
@@ -91,7 +134,7 @@ function uploadFile() {
         title: 'Uploading...',
         html: 'Please wait while the file is being uploaded.',
         timerProgressBar: true,
-        onBeforeOpen: () => {
+        didOpen: () => {
             Swal.showLoading()
         }
     });
