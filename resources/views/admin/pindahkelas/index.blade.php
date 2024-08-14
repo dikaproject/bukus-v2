@@ -70,6 +70,7 @@
                                     </tbody>
                                 </table>
                             </div>
+                            <button id="transferForm" type="button" style="display: none" class="btn btn-primary w-100"></button>
                         </form>
                     </div>
                 </div>

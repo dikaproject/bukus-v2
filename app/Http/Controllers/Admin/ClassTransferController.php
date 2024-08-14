@@ -18,45 +18,45 @@ class ClassTransferController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'students' => 'required|array',
-            'new_class' => 'required|string',
-        ]);
+{
+    $validated = $request->validate([
+        'students' => 'required|array',
+        'new_class' => 'required|string',
+    ]);
 
-        $notifications = [];
+    $notifications = [];
 
-        foreach ($validated['students'] as $studentId) {
-            try {
-                $student = Student::findOrFail($studentId);
-                $originalPoints = $student->tpoin;
-                $student->kelas = $validated['new_class'];
+    foreach ($validated['students'] as $studentId) {
+        $student = Student::find($studentId);
+        if ($student) {
+            $originalPoints = $student->tpoin;
+            $student->kelas = $validated['new_class'];
 
-                $reduces = Reduce::where('poin_min', '<=', $originalPoints)->where('poin_max', '>=', $originalPoints)->get();
+            // Logging data siswa dan poin awal
+            Log::info('Processing student:', ['id' => $studentId, 'originalPoints' => $originalPoints]);
 
-                foreach ($reduces as $reduce) {
-                    if ($originalPoints > 0) {
-                        $reduction = ($originalPoints * $reduce->reducepoin_prestasi) / 100;
-                        $student->tpoin -= $reduction;
-                        $notifications[] = $student->name . ' Terkena Reduce Poin Prestasi ' . $reduce->reducepoin_prestasi . '%';
-                    }
+            $reduces = Reduce::where('poin_min', '<=', $originalPoints)
+                             ->where('poin_max', '>=', $originalPoints)
+                             ->get();
+
+            foreach ($reduces as $reduce) {
+                if ($originalPoints > 0) {
+                    $reduction = ($originalPoints * $reduce->reducepoin_prestasi) / 100;
+                    $student->tpoin -= $reduction;
+                    $notifications[] = $student->name . ' Terkena Reduce Poin Prestasi ' . $reduce->reducepoin_prestasi . '%';
+
+                    // Log the reduction
+                    Log::info('Applying reduction:', ['student' => $student->name, 'reduction' => $reduction]);
                 }
-
-                $student->bintang = $student->calculateStars();
-                $student->save();
-            } catch (\Exception $e) {
-                Log::error("Error transferring student with ID: $studentId, Error: " . $e->getMessage());
-                return redirect()
-                    ->back()
-                    ->withErrors('Error transferring student with ID: ' . $studentId);
             }
-        }
 
-        return redirect()
-            ->route('admin.pindahkelas.index')
-            ->with([
-                'success' => 'Students have been successfully transferred.',
-                'notifications' => $notifications,
-            ]);
+            $student->save();
+        }
     }
+
+    return redirect()
+        ->route('admin.pindahkelas.index')
+        ->with(['success' => 'Students have been successfully transferred.', 'notifications' => $notifications]);
+}
+
 }

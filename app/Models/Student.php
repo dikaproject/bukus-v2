@@ -20,7 +20,7 @@ class Student extends Authenticatable
      * @var array<int, string>
      */
     protected $guard = 'student';
-    protected $fillable = ['name', 'nis', 'password', 'token', 'email', 'kelas', 'jurusan', 'angkatan', 'sekolah', 'tanggal', 'tpoin', 'bintang', 'reducepoin_prestasi', 'reducepoin_pelanggaran'];
+    protected $fillable = ['name', 'nis', 'password', 'token', 'email', 'kelas', 'jurusan', 'angkatan', 'sekolah', 'tanggal'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -45,30 +45,14 @@ class Student extends Authenticatable
     }
 
     public function updatePointsAndStars() {
-        $this->refresh(); // Ensure the model has the latest data
+        $this->refresh(); // Refresh the model to ensure it's up to date
 
-        // Calculate only confirmed points
         $totalPrestasi = $this->poins()->where('jenis', 'Prestasi')->where('konfirmasi', 'Benar')->sum('poin');
         $totalHukuman = $this->poins()->where('jenis', 'Hukuman')->where('konfirmasi', 'Benar')->sum('poin');
 
-        // Apply any reductions to prestasi points before updating tpoin
-        $totalPrestasi = $this->applyReductions($totalPrestasi);
-
-        // Update tpoin based on the net prestasi and hukuman points
         $this->tpoin = max(0, $totalPrestasi - $totalHukuman);
         $this->bintang = $this->calculateStars();
         $this->save();
-    }
-
-    private function applyReductions($totalPrestasi) {
-        $reductions = Reduce::all(); // Assuming Reduce is a model that holds reduction rules
-        foreach ($reductions as $reduce) {
-            if ($totalPrestasi >= $reduce->poin_min && $totalPrestasi <= $reduce->poin_max) {
-                $totalPrestasi *= (1 - ($reduce->reducepoin_prestasi / 100));
-                break; // Apply only the most relevant reduction
-            }
-        }
-        return $totalPrestasi;
     }
 
     public function calculateStars() {

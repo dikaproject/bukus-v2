@@ -73,11 +73,10 @@ class PoinController extends Controller
         $poin->konfirmasi = 'Benar';
         $poin->save();
 
-        $student = $poin->student;
-        $student->updatePointsAndStars(); // Update points and stars after confirmation
+        $poin->student->updatePointsAndStars();  // Update points and stars after confirmation
 
         Alert::success('Confirmation Success', 'Poin has been successfully confirmed.');
-        return redirect()->route('poin.confirm.index');
+        return back();
     }
 
     public function edit($id)
