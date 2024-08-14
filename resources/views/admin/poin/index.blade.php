@@ -138,8 +138,12 @@
                                     <td>{{ $poin->poin }}</td>
                                     <td>{{ \Carbon\Carbon::parse($poin->tanggal)->isoFormat('dddd, D MMMM YYYY') }}</td>
                                     <td>
-                                        <a href="#" class="btn btn-info btn-sm">Edit</a>
-                                        <a href="#" class="btn btn-danger btn-sm">Delete</a>
+                                        <a href="{{ route('poin.edit', $poin->id) }}" class="btn btn-info btn-sm">Edit</a>
+                                        <form action="{{ route('poin.destroy', $poin->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this point?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

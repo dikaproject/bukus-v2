@@ -8,6 +8,19 @@
         <div class="row">
             <div class="col-lg-8">
                 <div class="mb-3">
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                            @if (session('notifications'))
+                                <ul>
+                                    @foreach (session('notifications') as $notification)
+                                        <li>{{ $notification }}</li>
+                                    @endforeach
+                                </ul>
+                            @endif
+                        </div>
+                    @endif
+
                     <input type="text" id="searchInput" class="form-control mb-2" placeholder="Cari siswa...">
                     <select id="filterClass" class="form-control mb-4">
                         <option value="">Semua Kelas</option>

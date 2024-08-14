@@ -20,6 +20,7 @@
                             <th>Jurusan</th>
                             <th>Poin Prestasi</th>
                             <th>Poin Pelanggaran</th>
+                            <th>After Reduksi Poin Prestasi</th>
                             <th>Bintang</th>
                         </tr>
                     </thead>
@@ -33,6 +34,7 @@
                             <td>{{ $student->jurusan }}</td>
                             <td>{{ $student->poins->where('jenis', 'Prestasi')->sum('poin') }}</td>
                             <td>{{ $student->poins->where('jenis', 'Hukuman')->sum('poin') }}</td>
+                            <td>{{ $student->tpoin }}</td>
                             <td>{{ $student->bintang }}</td>
                         </tr>
                     @endforeach

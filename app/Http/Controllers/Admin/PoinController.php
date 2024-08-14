@@ -16,9 +16,7 @@ class PoinController extends Controller
     public function index()
     {
         $poins = Poin::all();
-        $students = Student::all();
-        $pasals = Pasal::all();
-        return view('admin.poin.index', compact('poins', 'students', 'pasals'));
+        return view('admin.poin.index', compact('poins'));
     }
 
     public function create()
@@ -31,13 +29,13 @@ class PoinController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama' => 'required', // Make sure this matches the name in the form
+            'nama' => 'required',
             'kode' => 'required|exists:pasals,kode',
             'bukti' => 'required',
         ]);
 
         $pasal = Pasal::where('kode', $request->kode)->firstOrFail();
-        $student = Student::where('name', $request->nama)->firstOrFail(); // Assuming 'nama' is the student name
+        $student = Student::where('name', $request->nama)->firstOrFail();
 
         $user = Auth::guard('web')->user() ?? Auth::guard('admin')->user();
 
@@ -49,7 +47,7 @@ class PoinController extends Controller
             'jenis' => $pasal->jenis,
             'pelanggaran' => $pasal->keterangan,
             'poin' => $pasal->poin,
-            'konfirmasi' => 'Belum',
+            'konfirmasi' => 'Belum', // Inisialisasi poin sebagai belum dikonfirmasi
             'bukti' => $request->bukti,
             'status_bukti' => 'Belum',
             'tanggal' => now(),
@@ -58,21 +56,17 @@ class PoinController extends Controller
         ]);
         $poin->save();
 
-        $this->updateStudentPoints($student);
-
-        Swal::toast('Poin created successfully.', 'success')->timerProgressBar();
+        Swal::toast('Poin recorded successfully. Awaiting confirmation.', 'info')->timerProgressBar();
 
         return redirect()->route('poin.index');
     }
 
-    // Display points waiting for confirmation
     public function confirmIndex()
     {
-        $poins = Poin::where('konfirmasi', 'Belum')->with('student')->get();
+        $poins = Poin::where('konfirmasi', 'Belum')->with('student')->get(); // Menampilkan hanya poin yang belum dikonfirmasi
         return view('admin.confirmpoin.index', compact('poins'));
     }
 
-    // Confirm points
     public function confirmPoin($id)
     {
         $poin = Poin::findOrFail($id);
@@ -80,30 +74,57 @@ class PoinController extends Controller
         $poin->save();
 
         $student = $poin->student;
-        $this->updateStudentPoints($student);
+        $student->updatePointsAndStars(); // Update points and stars after confirmation
 
-        Alert::success('Confirmed', 'Poin has been successfully confirmed.');
+        Alert::success('Confirmation Success', 'Poin has been successfully confirmed.');
         return redirect()->route('poin.confirm.index');
     }
 
-    // Helper function to update the student's points upon confirmation
-    private function updateStudentPoints(Student $student)
+    public function edit($id)
     {
-        $totalPrestasi = $student->poins()->where('jenis', 'Prestasi')->where('konfirmasi', 'Benar')->sum('poin');
-        $totalHukuman = $student->poins()->where('jenis', 'Hukuman')->where('konfirmasi', 'Benar')->sum('poin');
-
-        $student->tpoin = $totalPrestasi - $totalHukuman;
-        $student->bintang = $this->calculateStars($student->tpoin);
-        $student->save();
+        $poin = Poin::with('student')->findOrFail($id);
+        $students = Student::all();
+        $pasals = Pasal::all();
+        return view('admin.poin.edit', compact('poin', 'students', 'pasals'));
     }
 
-    private function calculateStars($netPoints)
+    public function update(Request $request, $id)
     {
-        if ($netPoints >= 100) return 5;
-        elseif ($netPoints >= 85) return 4;
-        elseif ($netPoints >= 70) return 3;
-        elseif ($netPoints >= 50) return 2;
-        elseif ($netPoints >= 30) return 1;
-        else return 0;
+        $request->validate([
+            'nama' => 'required',
+            'kode' => 'required|exists:pasals,kode',
+            'bukti' => 'required',
+        ]);
+
+        $poin = Poin::findOrFail($id);
+        $pasal = Pasal::where('kode', $request->kode)->firstOrFail();
+        $student = Student::where('name', $request->nama)->firstOrFail();
+
+        $poin->update([
+            'nama' => $student->name,
+            'kelas' => $student->kelas,
+            'kode' => $pasal->kode,
+            'jenis' => $pasal->jenis,
+            'pelanggaran' => $pasal->keterangan,
+            'poin' => $pasal->poin,
+            'bukti' => $request->bukti,
+        ]);
+
+        $student->updatePointsAndStars();
+
+        Alert::success('Success', 'Poin has been updated successfully.');
+        return redirect()->route('poin.index');
+    }
+
+    public function destroy($id)
+    {
+        $poin = Poin::findOrFail($id);
+        $poin->delete();
+
+        $student = $poin->student;
+        $student->updatePointsAndStars();
+
+        Alert::success('Deleted', 'Poin has been successfully deleted.');
+        return back();
     }
 }
