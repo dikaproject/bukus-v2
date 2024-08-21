@@ -72,6 +72,9 @@ Route::post('pasal/import', [PasalController::class, 'PasalImportExcel'])->name(
 
 // Rekap Controller settings
 Route::get('/settings/poins-berbintang', [SettingsController::class, 'showPoinBerbintang'])->name('settings.poins-berbintang');
+Route::get('/settings/poins-prestasi', [SettingsController::class, 'showPrestasi'])->name('settings.poins-prestasi');
+Route::get('/settings/poins-pelanggaran', [SettingsController::class, 'showPelanggaran'])->name('settings.poins-pelanggaran');
+Route::get('/settings/poins-siswa', [SettingsController::class, 'showSiswa'])->name('settings.poins-siswa');
 
 
 
