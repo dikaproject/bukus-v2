@@ -342,6 +342,7 @@
                 <ul class="dropdown-menu" aria-labelledby="loginDropdown">
                   <li><a class="dropdown-item" href="#">Login sebagai Siswa</a></li>
                   <li><a class="dropdown-item" href="#">Login sebagai Guru</a></li>
+                  <li><a class="dropdown-item" href="#">Login sebagai Admin</a></li>
                 </ul>
               </li>
             </ul>

@@ -78,8 +78,8 @@
                                 <a href="javascript:void(0);" class="float-end">SMK Telkom Purwokerto</a>
                             </li>
                             <li class="hstack justify-content-between mb-4">
-                                <span class="text-muted fw-medium hstack gap-3"><i class="feather-phone"></i>Jumlah Bintang</span>
-                                <a href="javascript:void(0);" class="float-end">+</a>
+                                <span class="text-muted fw-medium hstack gap-3"><i class="feather-star"></i>Jumlah Bintang</span>
+                                <a href="javascript:void(0);" class="float-end">3</a>
                             </li>
                             <li class="hstack justify-content-between mb-0">
                                 <span class="text-muted fw-medium hstack gap-3"><i class="feather-mail"></i>Email</span>

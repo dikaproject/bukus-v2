@@ -48,10 +48,10 @@
                             <li class="nxl-item"><a class="nxl-link" href="{{ route('reduces.index') }}">General Settings</a></li>
                             <li class="nxl-item"><a class="nxl-link" href="{{ route('permissions.index') }}">Permissions</a></li>
                             <li class="nxl-item"><a class="nxl-link" href="{{ route('roles.index') }}">Roles</a></li>
-                            <li class="nxl-item"><a class="nxl-link" href="settings-roles.html">Rekap Data Prestasi</a></li>
+                            <li class="nxl-item"><a class="nxl-link" href="{{route('settings.poins-prestasi')}}">Rekap Data Prestasi</a></li>
                             <li class="nxl-item"><a class="nxl-link" href="{{ route('settings.poins-berbintang') }}">Rekap Siswa Berbintang</a></li>
-                            <li class="nxl-item"><a class="nxl-link" href="settings-roles.html">Rekap Data Pelanggaran</a></li>
-                            <li class="nxl-item"><a class="nxl-link" href="settings-roles.html">Rekap Data Siswa</a></li>
+                            <li class="nxl-item"><a class="nxl-link" href="{{route('settings.poins-pelanggaran')}}">Rekap Data Pelanggaran</a></li>
+                            <li class="nxl-item"><a class="nxl-link" href="">Rekap Data Siswa</a></li>
                         </ul>
                     </li>
                     <li class="nxl-item nxl-hasmenu">
