@@ -682,6 +682,7 @@
                             @endif
                         @endauth
 
+                        
                         @auth('admin')
                             <!-- For Teacher and Walas roles authenticated via 'admin' guard -->
                             @if (Auth::guard('admin')->user()->hasAnyRole(['teacher', 'walas']))
