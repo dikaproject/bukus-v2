@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ClassTransferController;
 use App\Http\Controllers\Admin\PasalController;
 use App\Http\Controllers\Admin\PoinController;
+use App\Http\Controllers\Admin\ReducesController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Student\StudentProfileController;
@@ -87,4 +88,5 @@ Route::middleware('auth:student')->group(function () {
 Route::get('admin/pindahkelas', [ClassTransferController::class, 'index'])->name('admin.pindahkelas.index');
 Route::post('admin/pindahkelas', [ClassTransferController::class, 'store'])->name('admin.pindahkelas.store');
 
-
+//  reduce route
+Route::resource('reduces', ReducesController::class);

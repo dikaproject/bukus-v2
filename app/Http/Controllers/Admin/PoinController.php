@@ -9,6 +9,7 @@ use App\Models\Pasal;
 use App\Models\Student;
 use RealRashid\SweetAlert\Facades\Alert as Swal;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class PoinController extends Controller
@@ -70,13 +71,35 @@ class PoinController extends Controller
     public function confirmPoin($id)
     {
         $poin = Poin::findOrFail($id);
-        $poin->konfirmasi = 'Benar';
-        $poin->save();
+        if ($poin->konfirmasi !== 'Benar') {
+            // Hanya proses jika belum dikonfirmasi
+            $poin->konfirmasi = 'Benar';
+            $poin->save();
 
-        $poin->student->updatePointsAndStars();  // Update points and stars after confirmation
+            // Perbarui poin dan bintang siswa
+            $student = $poin->student;
+            $adjustment = $this->calculatePoinAdjustment($poin);
+            $student->tpoin += $adjustment; // Menyesuaikan tpoin berdasarkan poin yang dikonfirmasi
+            $student->updatePointsAndStars();
+            $student->save();
 
-        Alert::success('Confirmation Success', 'Poin has been successfully confirmed.');
+            Log::info('Poin confirmed and adjusted: ', ['nis' => $student->nis, 'poin_id' => $poin->id, 'adjustment' => $adjustment]);
+
+            Alert::success('Confirmation Success', 'Poin has been successfully confirmed.');
+        }
+
         return back();
+    }
+
+    private function calculatePoinAdjustment(Poin $poin)
+    {
+        // Menghitung penyesuaian berdasarkan jenis poin
+        if ($poin->jenis === 'Prestasi') {
+            return $poin->poin;  // Menambah poin untuk prestasi
+        } elseif ($poin->jenis === 'Hukuman') {
+            return -$poin->poin;  // Mengurangi poin untuk hukuman
+        }
+        return 0;
     }
 
     public function edit($id)
@@ -96,6 +119,7 @@ class PoinController extends Controller
         ]);
 
         $poin = Poin::findOrFail($id);
+        $oldPoinAdjustment = $poin->jenis === 'Prestasi' ? $poin->poin : -$poin->poin;
         $pasal = Pasal::where('kode', $request->kode)->firstOrFail();
         $student = Student::where('name', $request->nama)->firstOrFail();
 
@@ -109,7 +133,12 @@ class PoinController extends Controller
             'bukti' => $request->bukti,
         ]);
 
+        $newPoinAdjustment = $poin->jenis === 'Prestasi' ? $poin->poin : -$poin->poin;
+        $student->tpoin = $student->tpoin - $oldPoinAdjustment + $newPoinAdjustment;
         $student->updatePointsAndStars();
+        $student->save();
+
+        Log::info('Poin updated: ', ['nis' => $student->nis, 'poin_id' => $poin->id, 'old_adjustment' => $oldPoinAdjustment, 'new_adjustment' => $newPoinAdjustment]);
 
         Alert::success('Success', 'Poin has been updated successfully.');
         return redirect()->route('poin.index');
@@ -118,10 +147,15 @@ class PoinController extends Controller
     public function destroy($id)
     {
         $poin = Poin::findOrFail($id);
+        $student = $poin->student;
+        $adjustment = $poin->jenis === 'Prestasi' ? $poin->poin : -$poin->poin;
         $poin->delete();
 
-        $student = $poin->student;
+        $student->tpoin -= $adjustment;
         $student->updatePointsAndStars();
+        $student->save();
+
+        Log::info('Poin deleted and tpoin adjusted: ', ['nis' => $student->nis, 'poin_id' => $id, 'adjustment' => -$adjustment]);
 
         Alert::success('Deleted', 'Poin has been successfully deleted.');
         return back();

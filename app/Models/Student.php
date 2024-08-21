@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Log;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -20,7 +21,7 @@ class Student extends Authenticatable
      * @var array<int, string>
      */
     protected $guard = 'student';
-    protected $fillable = ['name', 'nis', 'password', 'token', 'email', 'kelas', 'jurusan', 'angkatan', 'sekolah', 'tanggal'];
+    protected $fillable = ['name', 'nis', 'password', 'token', 'email', 'kelas', 'jurusan', 'angkatan', 'sekolah', 'tanggal', 'tpoin', 'bintang', 'aksi', 'pesan'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -44,24 +45,27 @@ class Student extends Authenticatable
         return $this->hasMany(Poin::class, 'nis', 'nis');
     }
 
-    public function updatePointsAndStars() {
-        $this->refresh(); // Refresh the model to ensure it's up to date
+    public function updatePointsAndStars()
+{
+    $this->bintang = $this->calculateStars();  // Asumsi bahwa calculateStars menghitung bintang berdasarkan tpoin
+    $this->save();
+}
 
-        $totalPrestasi = $this->poins()->where('jenis', 'Prestasi')->where('konfirmasi', 'Benar')->sum('poin');
-        $totalHukuman = $this->poins()->where('jenis', 'Hukuman')->where('konfirmasi', 'Benar')->sum('poin');
-
-        $this->tpoin = max(0, $totalPrestasi - $totalHukuman);
-        $this->bintang = $this->calculateStars();
-        $this->save();
-    }
-
-    public function calculateStars() {
-        $netPoints = $this->tpoin;
-        if ($netPoints >= 100) return 5;
-        elseif ($netPoints >= 85) return 4;
-        elseif ($netPoints >= 70) return 3;
-        elseif ($netPoints >= 50) return 2;
-        elseif ($netPoints >= 30) return 1;
+private function calculateStars()
+{
+    if ($this->tpoin >= 100) {
+        return 5;
+    } elseif ($this->tpoin >= 85) {
+        return 4;
+    } elseif ($this->tpoin >= 70) {
+        return 3;
+    } elseif ($this->tpoin >= 50) {
+        return 2;
+    } elseif ($this->tpoin >= 30) {
+        return 1;
+    } else {
         return 0;
     }
+}
+
 }
