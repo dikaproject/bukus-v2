@@ -6,8 +6,8 @@
         <div class="m-header">
             <a href="index.html" class="b-brand">
                 <!-- ========   change your logo hear   ============ -->
-                <img src="assets/images/logo-full.png" alt="" class="logo logo-lg" />
-                <img src="assets/images/logo-abbr.png" alt="" class="logo logo-sm" />
+                <img src="{{asset('assets/images/smktelkompwt-logore.png')}}" alt="" class="logo logo-lg" />
+                <img src="{{asset('assets/images/smktelkompwt-logore.png')}}" alt="" class="logo logo-sm" />
             </a>
         </div>
         <div class="navbar-content">
@@ -16,9 +16,15 @@
                     <label>Navigation</label>
                 </li>
                 <li class="nxl-item">
-                    <a href="{{ route('student_dashboard') }}" class="nxl-link">
+                    <a href="/siswa" class="nxl-link">
                         <span class="nxl-micon"><i class="feather-cast"></i></span>
-                        <span class="nxl-mtext">Dashboard</span>
+                        <span class="nxl-mtext">Home</span>
+                    </a>
+                </li>
+                <li class="nxl-item nxl-hasmenu">
+                    <a href="/pasalll" class="nxl-link">
+                        <span class="nxl-micon"><i class="feather-book"></i></span>
+                        <span class="nxl-mtext">Pasal</span><span class="nxl-arrow"></span>
                     </a>
                 </li>
                 {{-- @if (auth()->user() &&

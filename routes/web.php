@@ -45,3 +45,11 @@ require __DIR__.'/admin.php';
 Route::get('datapoin', function () {
     return view('poin.index');
 });
+
+Route::get('/siswa', function () {
+    return view('student.dashboard');
+});
+
+Route::get('/pasalll', function () {
+return view('student.pasal.index');
+});

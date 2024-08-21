@@ -14,7 +14,7 @@
     <title>Admin BukuSaku-v2 || Dashboard</title>
     <!--! END:  Apps Title-->
     <!--! BEGIN: Favicon-->
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/images/favicon.ico')}}" />
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/images/smktelkomnew.png')}}" />
     <!--! END: Favicon-->
     <!--! BEGIN: Bootstrap CSS-->
     @yield('css-script')
