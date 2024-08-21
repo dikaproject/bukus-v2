@@ -27,6 +27,12 @@
                         <span class="nxl-mtext">Pasal</span><span class="nxl-arrow"></span>
                     </a>
                 </li>
+                <li class="nxl-item nxl-hasmenu">
+                    <a href="/pasalll" class="nxl-link">
+                        <span class="nxl-micon"><i class="feather-book"></i></span>
+                        <span class="nxl-mtext">Tentang</span><span class="nxl-arrow"></span>
+                    </a>
+                </li>
                 {{-- @if (auth()->user() &&
                         auth()->user()->hasAnyRole(['admin', 'teacher']))
                     <li class="nxl-item {{ request()->is('admin/admin') ? ' active' : '' }}">

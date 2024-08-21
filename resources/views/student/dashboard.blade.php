@@ -78,8 +78,8 @@
                                 <a href="javascript:void(0);" class="float-end">SMK Telkom Purwokerto</a>
                             </li>
                             <li class="hstack justify-content-between mb-4">
-                                <span class="text-muted fw-medium hstack gap-3"><i class="feather-phone"></i>Phone</span>
-                                <a href="javascript:void(0);" class="float-end">+01 (375) 2589 645</a>
+                                <span class="text-muted fw-medium hstack gap-3"><i class="feather-phone"></i>Jumlah Bintang</span>
+                                <a href="javascript:void(0);" class="float-end">+</a>
                             </li>
                             <li class="hstack justify-content-between mb-0">
                                 <span class="text-muted fw-medium hstack gap-3"><i class="feather-mail"></i>Email</span>
