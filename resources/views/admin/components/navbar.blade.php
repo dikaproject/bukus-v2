@@ -45,7 +45,7 @@
                             <span class="nxl-mtext">Settings</span><span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
                         </a>
                         <ul class="nxl-submenu">
-                            <li class="nxl-item"><a class="nxl-link" href="settings.html">General Settings</a></li>
+                            <li class="nxl-item"><a class="nxl-link" href="{{ route('reduces.index') }}">General Settings</a></li>
                             <li class="nxl-item"><a class="nxl-link" href="{{ route('permissions.index') }}">Permissions</a></li>
                             <li class="nxl-item"><a class="nxl-link" href="{{ route('roles.index') }}">Roles</a></li>
                             <li class="nxl-item"><a class="nxl-link" href="settings-roles.html">Rekap Data Prestasi</a></li>

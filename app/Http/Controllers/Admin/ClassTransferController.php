@@ -24,39 +24,40 @@ class ClassTransferController extends Controller
             'new_class' => 'required|string',
         ]);
 
-        $notifications = [];
-
         foreach ($validated['students'] as $studentId) {
-            try {
-                $student = Student::findOrFail($studentId);
-                $originalPoints = $student->tpoin;
-                $student->kelas = $validated['new_class'];
+            $student = Student::findOrFail($studentId);
+            $student->kelas = $validated['new_class'];
 
-                $reduces = Reduce::where('poin_min', '<=', $originalPoints)->where('poin_max', '>=', $originalPoints)->get();
+            // Log before applying reductions
+            Log::info("Before applying reductions - Student: {$student->name}, tpoin: {$student->tpoin}");
 
-                foreach ($reduces as $reduce) {
-                    if ($originalPoints > 0) {
-                        $reduction = ($originalPoints * $reduce->reducepoin_prestasi) / 100;
-                        $student->tpoin -= $reduction;
-                        $notifications[] = $student->name . ' Terkena Reduce Poin Prestasi ' . $reduce->reducepoin_prestasi . '%';
-                    }
-                }
+            // Apply reductions based on current poin
+            $this->applyReductions($student);
 
-                $student->bintang = $student->calculateStars();
-                $student->save();
-            } catch (\Exception $e) {
-                Log::error("Error transferring student with ID: $studentId, Error: " . $e->getMessage());
-                return redirect()
-                    ->back()
-                    ->withErrors('Error transferring student with ID: ' . $studentId);
-            }
+            // Save the new class and potentially new tpoin
+            $student->save();
+
+            Log::info("After applying reductions - Student: {$student->name}, New Class: {$student->kelas}, tpoin: {$student->tpoin}");
         }
 
         return redirect()
             ->route('admin.pindahkelas.index')
-            ->with([
-                'success' => 'Students have been successfully transferred.',
-                'notifications' => $notifications,
-            ]);
+            ->with('success', 'Students have been successfully transferred.');
     }
+
+    private function applyReductions(Student $student)
+    {
+        $reductions = Reduce::where('poin_min', '<=', $student->tpoin)
+                            ->where('poin_max', '>=', $student->tpoin)
+                            ->orderByDesc('reducepoin_prestasi') // Ensure we apply the highest applicable reduction
+                            ->first();
+
+        if ($reductions) {
+            $reductionAmount = $student->tpoin * ($reductions->reducepoin_prestasi / 100);
+            $student->tpoin -= $reductionAmount;
+            Log::info("Reduction applied - Student: {$student->name}, Reduction: {$reductions->reducepoin_prestasi}%, Reduced Amount: {$reductionAmount}, New tpoin: {$student->tpoin}");
+        }
+    }
+
+
 }
