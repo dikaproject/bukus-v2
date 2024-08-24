@@ -19,7 +19,7 @@ class AdminAuthController extends Controller
     }
     public function login()
     {
-        return view('auth.admin');
+        return view('auth.teacher');
     }
     public function login_submit(Request $request)
     {

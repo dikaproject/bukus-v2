@@ -8,18 +8,45 @@
     <div class="page-header">
         <div class="page-header-left d-flex align-items-center">
             <div class="page-header-title">
-                <h5 class="m-b-10">Students Overview</h5>
+                <h5 class="m-b-10">Data Siswa</h5>
             </div>
             <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin_dashboard') }}">Home</a></li>
-                <li class="breadcrumb-item">Students</li>
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item">Data Siswa</li>
             </ul>
         </div>
-        <div class="page-header-right ms-auto d-flex align-items-center">
-            <a href="{{ route('students.create') }}" class="btn btn-primary me-3">
-                <i class="feather-plus me-2"></i>
-                <span>Add Student</span>
-            </a>
+        <div class="page-header-right ms-auto">
+            <div class="page-header-right-items">
+                <div class="d-flex d-md-none">
+                    <a href="javascript:void(0)" class="page-header-right-close-toggle">
+                        <i class="feather-arrow-left me-2"></i>
+                        <span>Back</span>
+                    </a>
+                </div>
+                <div class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
+                    <div class="dropdown">
+                        <a class="btn btn-icon btn-light-brand" data-bs-toggle="dropdown" data-bs-offset="0, 10"
+                            data-bs-auto-close="outside">
+                            <i class="feather-paperclip"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <a href="{{ route('export.students') }}" class="dropdown-item">
+                                <i class="bi bi-filetype-pdf me-3"></i>
+                                <span>EXCEL</span>
+                            </a>
+                        </div>
+                    </div>
+                    <a href="{{ route('students.create') }}" class="btn btn-primary me-3">
+                        <i class="feather-plus me-2"></i>
+                        <span>Add Student</span>
+                    </a>
+                </div>
+            </div>
+            <div class="d-md-none d-flex align-items-center">
+                <a href="javascript:void(0)" class="page-header-right-open-toggle">
+                    <i class="feather-align-right fs-20"></i>
+                </a>
+            </div>
         </div>
     </div>
     <!-- [ page-header ] end -->
@@ -84,6 +111,10 @@
                                                             @method('DELETE')
                                                             <button type="submit" class="dropdown-item"><i class="feather-trash-2"></i>Delete</button>
                                                         </form>
+                                                        <form action="{{ route('students.reset-password', $student->id) }}" method="POST">
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-warning">Reset Password</button>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </td>
@@ -91,7 +122,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            
+
                         </div>
                     </div>
                 </div>

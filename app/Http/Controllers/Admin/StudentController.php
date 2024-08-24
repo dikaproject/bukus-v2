@@ -98,9 +98,29 @@ class StudentController extends Controller
             'file' => 'required|file|mimes:xlsx,xls',
         ]);
 
-        Excel::import(new StudentsImport, $request->file('file'));
+        Excel::import(new StudentsImport(), $request->file('file'));
 
         return response()->json(['success' => true]);
         return redirect()->route('students.index');
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->get('q');
+        $result = Student::where('name', 'LIKE', "%$search%")->get();
+
+        return response()->json($result);
+    }
+
+    public function resetPassword($id)
+    {
+        $student = Student::findOrFail($id);
+
+        // Reset password to the student's NIS and clear email
+        $student->password = Hash::make($student->nis);
+        $student->email = null;
+        $student->save();
+
+        return redirect()->route('students.index')->with('success', 'Password reset successfully, and email cleared.');
     }
 }
