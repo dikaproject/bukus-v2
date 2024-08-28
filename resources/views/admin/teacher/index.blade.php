@@ -22,6 +22,10 @@
                     </a>
                 </div>
                 <div class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
+                    <form class="d-flex me-3" action="" method="GET">
+                        <input type="text" name="search" class="form-control" placeholder="Search Teachers...">
+                        <button type="submit" class="btn btn-secondary ms-2">Search</button>
+                    </form>
                     <div class="dropdown">
                         <a class="btn btn-icon btn-light-brand" data-bs-toggle="dropdown" data-bs-offset="0, 10"
                             data-bs-auto-close="outside">
@@ -76,7 +80,7 @@
                                     <td>{{ $admin->jabatan }}</td>
                                     <td>
                                         <a href="{{ route('admins.edit', $admin->id) }}" class="btn btn-info btn-sm">Edit</a>
-                                        <form action="{{ route('admins.destroy', $admin->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this Teacher?');">
+                                        <form action="{{ route('admins.destroy', $admin->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this Teacher?');" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm">Delete</button>
@@ -91,4 +95,19 @@
         </div>
     </div>
 
+@endsection
+
+@section('style')
+<style>
+    /* Optional: Adjust spacing and layout for the search form */
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+        border-color: #545b62;
+    }
+</style>
 @endsection
