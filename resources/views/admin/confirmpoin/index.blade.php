@@ -23,8 +23,13 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header d-flex justify-content-between align-items-center">
                         <h5 class="card-title">Pending Points Confirmation</h5>
+                        <!-- Search Form -->
+                        <form class="d-flex" action="" method="GET">
+                            <input type="text" name="search" class="form-control" placeholder="Search Students...">
+                            <button type="submit" class="btn btn-secondary ms-2">Search</button>
+                        </form>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">

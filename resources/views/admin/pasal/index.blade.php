@@ -16,7 +16,11 @@
             </ul>
         </div>
         <div class="page-header-right ms-auto d-flex align-items-center">
-            <a href="{{ route('pasal.create') }}" class="btn btn-primary me-3">
+            <form class="d-flex me-3" action="" method="GET">
+                <input type="text" name="search" class="form-control" placeholder="Search Pasal...">
+                <button type="submit" class="btn btn-secondary ms-2">Search</button>
+            </form>
+            <a href="{{ route('pasal.create') }}" class="btn btn-primary">
                 <i class="feather-plus me-2"></i>
                 <span>Create Pasal</span>
             </a>
@@ -128,44 +132,15 @@
         background-color: #0056b3;
         border-color: #004085;
     }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+        border-color: #545b62;
+    }
 </style>
-@endsection
-
-@section('script')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script>
-function uploadFile() {
-    const formData = new FormData(document.getElementById('fileUploadForm'));
-    Swal.fire({
-        title: 'Uploading...',
-        html: 'Please wait while the file is being uploaded.',
-        timerProgressBar: true,
-        didOpen: () => {
-            Swal.showLoading()
-        }
-    });
-
-    fetch('{{ route('pasal.import') }}', {
-        method: 'POST',
-        body: formData,
-        headers: {
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        Swal.close();
-        if (data.success) {
-            Swal.fire('Success', 'Pasals imported successfully', 'success').then(() => {
-                window.location.href = "{{ route('pasal.index') }}";
-            });
-        } else {
-            Swal.fire('Error', 'Failed to import pasals', 'error');
-        }
-    })
-    .catch(error => {
-        Swal.fire('Error', 'Network or server error', 'error');
-    });
-}
-</script>
 @endsection

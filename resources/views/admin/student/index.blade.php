@@ -24,6 +24,10 @@
                     </a>
                 </div>
                 <div class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
+                    <form class="d-flex me-3" action="{{ route('students.search') }}" method="GET">
+                        <input type="text" name="search" class="form-control" placeholder="Search Students...">
+                        <button type="submit" class="btn btn-secondary ms-2">Search</button>
+                    </form>
                     <div class="dropdown">
                         <a class="btn btn-icon btn-light-brand" data-bs-toggle="dropdown" data-bs-offset="0, 10"
                             data-bs-auto-close="outside">
@@ -150,6 +154,16 @@
     .btn-primary:hover {
         background-color: #0056b3;
         border-color: #004085;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+        border-color: #545b62;
     }
 </style>
 @endsection
