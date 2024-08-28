@@ -28,10 +28,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('admin/dashboard', function () {
-    return view('admin.dashboard');
-})->middleware(['auth', 'verified', 'role:admin']);
-
 
 
 
@@ -52,4 +48,9 @@ Route::get('/siswa', function () {
 
 Route::get('/pasalll', function () {
 return view('student.pasal.index');
+});
+
+Route::get('/reloadpoin', function () {
+    $student = \App\Models\Student::find(1);
+    $student->updatePointsAndStars();
 });

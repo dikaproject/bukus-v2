@@ -672,24 +672,24 @@
                         <div class="dropdown-divider"></div>
                         @auth('web')
                             <!-- For Admin and Leader roles authenticated via 'web' guard -->
-                            @if (Auth::user()->hasAnyRole(['admin', 'leader']))
+                            @if (Auth::user()->hasAnyRole(['admin']))
                                 <form method="POST" action="{{ route('logout') }}" style="display: inline;">
                                     @csrf
                                     <button type="submit" class="btn btn-link dropdown-item">
-                                        <i class="feather-log-out"></i> Logout as Admin/Leader
+                                        <i class="feather-log-out"></i> Logout as Admin
                                     </button>
                                 </form>
                             @endif
                         @endauth
 
-                        
+
                         @auth('admin')
                             <!-- For Teacher and Walas roles authenticated via 'admin' guard -->
-                            @if (Auth::guard('admin')->user()->hasAnyRole(['teacher', 'walas']))
+                            @if (Auth::guard('admin')->user()->hasAnyRole(['teacher', 'walas', 'leader']))
                                 <form method="POST" action="{{ route('admin_logout') }}" style="display: inline;">
                                     @csrf
                                     <button type="submit" class="btn btn-link dropdown-item">
-                                        <i class="feather-log-out"></i> Logout as Teacher/Walas
+                                        <i class="feather-log-out"></i> Logout as Walas / Tim Disiplin
                                     </button>
                                 </form>
                             @endif

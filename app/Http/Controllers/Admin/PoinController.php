@@ -16,7 +16,7 @@ class PoinController extends Controller
 {
     public function index()
     {
-        $poins = Poin::all();
+        $poins = Poin::whereIn('konfirmasi', ['Benar', 'Belum'])->get();
         return view('admin.poin.index', compact('poins'));
     }
 
@@ -90,6 +90,38 @@ class PoinController extends Controller
 
         return back();
     }
+
+    public function cancelPoin($id)
+{
+    $poin = Poin::findOrFail($id);
+    if ($poin->konfirmasi !== 'Benar' && $poin->konfirmasi !== 'Salah') { // Pastikan poin belum dikonfirmasi atau ditandai salah
+        $poin->konfirmasi = 'Salah';
+        $poin->save();
+
+        // Log perubahan tanpa melakukan penyesuaian poin
+        Log::info('Poin marked as incorrect without adjustment: ', ['nis' => $poin->student->nis, 'poin_id' => $poin->id]);
+
+        Alert::success('Cancellation Success', 'Poin has been marked as incorrect without affecting points.');
+    } else if ($poin->konfirmasi === 'Benar') {
+        // Jika poin sebelumnya telah dikonfirmasi sebagai Benar dan ingin dibatalkan
+        $adjustment = -$this->calculatePoinAdjustment($poin); // Mengembalikan penyesuaian poin
+        $student = $poin->student;
+        $student->tpoin += $adjustment;
+        $student->updatePointsAndStars();
+        $student->save();
+
+        // Perbarui status poin menjadi 'Salah'
+        $poin->konfirmasi = 'Salah';
+        $poin->save();
+
+        Log::info('Poin confirmation canceled and adjusted: ', ['nis' => $student->nis, 'poin_id' => $poin->id, 'adjustment' => $adjustment]);
+        Alert::success('Cancellation Success', 'Poin confirmation has been canceled and points adjusted accordingly.');
+    }
+
+    return back();
+}
+
+
 
     private function calculatePoinAdjustment(Poin $poin)
     {

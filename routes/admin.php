@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\ReducesController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Student\StudentProfileController;
+use App\Http\Controllers\Admin\ExportSystemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,16 +27,16 @@ use App\Http\Controllers\Student\StudentProfileController;
 |
 */
 
-Route::resource('permissions', PermissionController::class)->middleware(['role:teacher,admin']);
-Route::delete('permissions/{permission}/delete', [PermissionController::class, 'destroy'])->name('permissions.destroy')->middleware(['role:teacher,admin']);
+Route::resource('permissions', PermissionController::class)->middleware(['role:admin']);
+Route::delete('permissions/{permission}/delete', [PermissionController::class, 'destroy'])->name('permissions.destroy')->middleware(['role:admin']);
 
-Route::resource('roles', RoleController::class)->middleware(['role:teacher,admin']);
-Route::delete('roles/{role}/delete', [RoleController::class, 'destroy'])->name('roles.destroy')->middleware(['role:teacher,admin']);
-Route::get('roles/{role}/permissions', [RoleController::class, 'permissions'])->name('roles.permissions')->middleware(['role:teacher,admin']);
-Route::post('roles/{role}/permissions', [RoleController::class, 'attachPermissions'])->name('roles.attachPermissions')->middleware(['role:teacher,admin']);
+Route::resource('roles', RoleController::class)->middleware(['role:admin']);
+Route::delete('roles/{role}/delete', [RoleController::class, 'destroy'])->name('roles.destroy')->middleware(['role:admin']);
+Route::get('roles/{role}/permissions', [RoleController::class, 'permissions'])->name('roles.permissions')->middleware(['role:admin']);
+Route::post('roles/{role}/permissions', [RoleController::class, 'attachPermissions'])->name('roles.attachPermissions')->middleware(['role:admin']);
 
 /* admin routes */
-Route::middleware('admin')->group(function () {
+Route::middleware('check.role:admin,leader,teacher,walas')->group(function () {
     Route::get('/dashboard', [AdminAuthController::class, 'dashboard'])->name('admin_dashboard');
 });
 
@@ -59,27 +60,30 @@ Route::prefix('siswa')->group(function () {
 
 
 // CRUD Student and Teacher / admin
-Route::resource('admins', AdminController::class);
+Route::resource('admins', AdminController::class)->middleware('check.role:admin,leader,teacher,walas');
 
 // CRUD System
-Route::resource('poin', PoinController::class);
-Route::get('poins/confirm', [PoinController::class, 'confirmIndex'])->name('poin.confirm.index');
-Route::get('poins/confirm/{id}', [PoinController::class, 'confirmPoin'])->name('poin.confirm');
-Route::resource('pasal', PasalController::class);
+Route::resource('poin', PoinController::class)->middleware('check.role:admin,leader,teacher,walas');
+Route::get('poins/confirm', [PoinController::class, 'confirmIndex'])->name('poin.confirm.index')->middleware('check.role:admin,leader,teacher,walas');
+Route::get('poins/confirm/{id}', [PoinController::class, 'confirmPoin'])->name('poin.confirm')->middleware('check.role:admin,leader,teacher,walas');
+Route::get('poins/cancel/{id}', [PoinController::class, 'cancelPoin'])->name('poin.cancel')->middleware('check.role:admin,leader,teacher,walas');
+Route::resource('pasal', PasalController::class)->middleware('check.role:admin,leader,teacher,walas');
 
 // Pasal Import Excel
-Route::post('pasal/import', [PasalController::class, 'PasalImportExcel'])->name('pasal.import');
+Route::post('pasal/import', [PasalController::class, 'PasalImportExcel'])->name('pasal.import')->middleware('check.role:admin,leader,teacher,walas');
 
 // Rekap Controller settings
-Route::get('/settings/poins-berbintang', [SettingsController::class, 'showPoinBerbintang'])->name('settings.poins-berbintang');
-Route::get('/settings/poins-prestasi', [SettingsController::class, 'showPrestasi'])->name('settings.poins-prestasi');
-Route::get('/settings/poins-pelanggaran', [SettingsController::class, 'showPelanggaran'])->name('settings.poins-pelanggaran');
-Route::get('/settings/poins-siswa', [SettingsController::class, 'showSiswa'])->name('settings.poins-siswa');
+Route::get('/settings/poins-berbintang', [SettingsController::class, 'showPoinBerbintang'])->name('settings.poins-berbintang')->middleware('check.role:admin,leader,teacher,walas');
+Route::get('/settings/poins-prestasi', [SettingsController::class, 'showPrestasi'])->name('settings.poins-prestasi')->middleware('check.role:admin,leader,teacher,walas');
+Route::get('/settings/poins-pelanggaran', [SettingsController::class, 'showPelanggaran'])->name('settings.poins-pelanggaran')->middleware('check.role:admin,leader,teacher,walas');
+Route::get('/settings/poins-siswa', [SettingsController::class, 'showSiswa'])->name('settings.poins-siswa')->middleware('check.role:admin,leader,teacher,walas');
 
 
 
-Route::resource('students', StudentController::class);
-Route::post('students/import', [StudentController::class, 'import'])->name('students.import');
+Route::resource('students', StudentController::class)->middleware('check.role:admin,leader,teacher,walas');
+Route::post('students/{id}/reset-password', [StudentController::class, 'resetPassword'])->name('students.reset-password');
+Route::get('/students/search', [StudentController::class, 'search'])->name('students.search');
+Route::post('students/import', [StudentController::class, 'import'])->name('students.import')->middleware('check.role:admin,leader,teacher,walas');
 
 Route::middleware('auth:student')->group(function () {
     Route::get('/complete-profile', [StudentProfileController::class, 'edit'])->name('students.complete.profile');
@@ -88,8 +92,18 @@ Route::middleware('auth:student')->group(function () {
 
 
 // Pindah Kelas Route
-Route::get('admin/pindahkelas', [ClassTransferController::class, 'index'])->name('admin.pindahkelas.index');
-Route::post('admin/pindahkelas', [ClassTransferController::class, 'store'])->name('admin.pindahkelas.store');
+Route::get('admin/pindahkelas', [ClassTransferController::class, 'index'])->name('admin.pindahkelas.index')->middleware('check.role:admin,leader,teacher,walas');
+Route::post('admin/pindahkelas', [ClassTransferController::class, 'store'])->name('admin.pindahkelas.store')->middleware('check.role:admin,leader,teacher,walas');
 
 //  reduce route
-Route::resource('reduces', ReducesController::class);
+Route::resource('reduces', ReducesController::class)->middleware('check.role:admin,leader,teacher,walas');
+
+// export data excel
+Route::get('/export-prestasi',  [ExportSystemController::class, 'exportPrestasi'])->name('export.prestasi');
+Route::get('/export-berbintang', [ExportSystemController::class, 'exportBerbintang'])->name('export.berbintang');
+Route::get('/export-pelanggaran', [ExportSystemController::class, 'exportPelanggaran'])->name('export.pelanggaran');
+Route::get('/export-students', [ExportSystemController::class, 'exportStudents'])->name('export.students');
+
+
+
+

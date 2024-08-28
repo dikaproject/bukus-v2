@@ -24,6 +24,7 @@
     </div>
     <!-- [ page-header ] end -->
 
+    @cancan('import-regulation', 'web|admin')
     <!-- [ Upload Form ] start -->
     <div class="row mt-4">
         <div class="col-lg-12">
@@ -45,6 +46,7 @@
         </div>
     </div>
     <!-- [ Upload Form ] end -->
+    @endcancan
 
     <!-- [ Main Content ] start -->
     <div class="main-content mt-4">
@@ -80,12 +82,16 @@
                                                         <i class="feather-more-vertical"></i>
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-end">
+                                                        @cancan('regulation-edit', 'web|admin')
                                                         <a href="{{ route('pasal.edit', $pasal->id) }}" class="dropdown-item"><i class="feather-edit"></i>Edit</a>
+                                                        @endcancan
+                                                        @cancan('regulation-delete', 'web|admin')
                                                         <form action="{{ route('pasal.destroy', $pasal->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure?')">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit" class="dropdown-item"><i class="feather-trash-2"></i>Delete</button>
                                                         </form>
+                                                        @endcancan
                                                     </div>
                                                 </div>
                                             </td>
@@ -93,7 +99,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            
+
                         </div>
                     </div>
                 </div>

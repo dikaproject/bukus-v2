@@ -43,18 +43,14 @@
                                     @foreach ($poins as $poin)
                                     <tr>
                                         <td>{{ $poin->id }}</td>
-                                        <td>{{ $poin->student->name }}</td>
+                                        <td>{{ $poin->student->name ?? "NULL" }}</td>
                                         <td>{{ $poin->poin }}</td>
                                         <td>{{ $poin->jenis }}</td>
                                         <td>{{ \Carbon\Carbon::parse($poin->tanggal)->isoFormat('dddd, D MMMM YYYY') }}</td>
                                         <td>
                                             <div class="d-flex justify-content-start">
                                                 <a href="{{ route('poin.confirm', $poin->id) }}" class="btn btn-success me-2">Confirm</a>
-                                                <form action="{{ route('poin.destroy', $poin->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this item?');" class="d-inline">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger">Cancel</button>
-                                                </form>
+                                                <a href="{{ route('poin.cancel', $poin->id) }}" class="btn btn-danger me-2">Cancel</a>
                                             </div>
                                         </td>
                                     </tr>

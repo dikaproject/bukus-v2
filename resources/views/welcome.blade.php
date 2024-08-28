@@ -340,9 +340,9 @@
                   Login/Register
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="loginDropdown">
-                  <li><a class="dropdown-item" href="#">Login sebagai Siswa</a></li>
-                  <li><a class="dropdown-item" href="#">Login sebagai Guru</a></li>
-                  <li><a class="dropdown-item" href="#">Login sebagai Admin</a></li>
+                  <li><a class="dropdown-item" href="{{ route('student_login') }}">Login sebagai Siswa</a></li>
+                  <li><a class="dropdown-item" href="{{ route('admin_login') }}">Login sebagai Guru</a></li>
+                  <li><a class="dropdown-item" href="{{ route('login') }}">Login sebagai Admin</a></li>
                 </ul>
               </li>
             </ul>

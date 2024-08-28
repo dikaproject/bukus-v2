@@ -105,7 +105,7 @@
                                     </div>
                                     <div>
                                         <div class="fs-4 fw-bold text-dark">
-                                            <span class="counter">0</span>
+                                            <span class="counter">{{ $totalPelanggar }}</span>
                                         </div>
                                         <h3 class="fs-13 fw-semibold text-truncate-1-line">Total Pelanggar</h3>
                                     </div>
@@ -114,7 +114,7 @@
                                     <i class="feather-more-vertical"></i>
                                 </a>
                             </div>
-                           
+
                         </div>
                     </div>
                 </div>
@@ -130,7 +130,7 @@
                                     </div>
                                     <div>
                                         <div class="fs-4 fw-bold text-dark">
-                                            <span class="counter">504</span>
+                                            <span class="counter">{{ $rankingPoin }}</span>
                                         </div>
                                         <h3 class="fs-13 fw-semibold text-truncate-1-line">Ranking Poin</h3>
                                     </div>
@@ -139,7 +139,7 @@
                                     <i class="feather-more-vertical"></i>
                                 </a>
                             </div>
-                           
+
                         </div>
                     </div>
                 </div>
@@ -155,7 +155,7 @@
                                     </div>
                                     <div>
                                         <div class="fs-4 fw-bold text-dark">
-                                            <span class="counter">101</span>
+                                            <span class="counter">{{ $totalPasal }}</span>
                                         </div>
                                         <h3 class="fs-13 fw-semibold text-truncate-1-line">Total Pasal</h3>
                                     </div>
@@ -164,7 +164,7 @@
                                     <i class="feather-more-vertical"></i>
                                 </a>
                             </div>
-                           
+
                         </div>
                     </div>
                 </div>
@@ -180,7 +180,7 @@
                                     </div>
                                     <div>
                                         <div class="fs-4 fw-bold text-dark">
-                                            <span class="counter">504</span>
+                                            <span class="counter">{{ $totalSiswaBelumInstall }}</span>
                                         </div>
                                         <h3 class="fs-13 fw-semibold text-truncate-1-line">Total Siswa Belum Install</h3>
                                     </div>
@@ -189,36 +189,36 @@
                                     <i class="feather-more-vertical"></i>
                                 </a>
                             </div>
-                           
+
                         </div>
                     </div>
                 </div>
                 <!-- [Conversion Rate] end -->
                 <!-- [Payment Records] start -->
-              
+
                 <!-- [Payment Records] end -->
                 <!-- [Total Sales] start -->
-              
+
                 <!-- [Total Sales] end !-->
                 <!-- [Mini] start -->
-                
-                
-                
+
+
+
                 <!-- [Mini] end !-->
                 <!-- [Leads Overview] start -->
-               
+
                 <!-- [Leads Overview] end -->
                 <!-- [Latest Leads] start -->
 
                 <!-- [Latest Leads] end -->
                 <!--! BEGIN: [Upcoming Schedule] !-->
-               
+
                 <!--! END: [Upcoming Schedule] !-->
                 <!--! BEGIN: [Project Status] !-->
-              
+
                 <!--! END: [Project Status] !-->
                 <!--! BEGIN: [Team Progress] !-->
-               
+
                 <!--! END: [Team Progress] !-->
             </div>
         </div>

@@ -47,8 +47,11 @@
                                                 <td>{{ $reduce->reducepoin_prestasi }}%</td>
                                                 <td>{{ $reduce->reducepoin_pelanggaran }}%</td>
                                                 <td>
+                                                    @cancan('reduction-edit', 'web|admin')
                                                     <a href="{{ route('reduces.edit', $reduce->id) }}"
                                                         class="btn btn-sm btn-primary">Edit</a>
+                                                    @endcancan
+                                                    @cancan('reduction-delete', 'web|admin')
                                                     <form action="{{ route('reduces.destroy', $reduce->id) }}"
                                                         method="POST"
                                                         onsubmit="return confirm('Are you sure you want to delete this item?');"
@@ -57,6 +60,7 @@
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                                                     </form>
+                                                    @endcancan
                                                 </td>
                                             </tr>
                                         @endforeach
