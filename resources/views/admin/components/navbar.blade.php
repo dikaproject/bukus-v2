@@ -51,7 +51,7 @@
                             <li class="nxl-item"><a class="nxl-link" href="{{route('settings.poins-prestasi')}}">Rekap Data Prestasi</a></li>
                             <li class="nxl-item"><a class="nxl-link" href="{{ route('settings.poins-berbintang') }}">Rekap Siswa Berbintang</a></li>
                             <li class="nxl-item"><a class="nxl-link" href="{{route('settings.poins-pelanggaran')}}">Rekap Data Pelanggaran</a></li>
-                            <li class="nxl-item"><a class="nxl-link" href="">Rekap Data Siswa</a></li>
+                            <li class="nxl-item"><a class="nxl-link" href="{{route('settings.poins-siswa')}}">Rekap Data Siswa</a></li>
                         </ul>
                     </li>
                     <li class="nxl-item nxl-hasmenu">
