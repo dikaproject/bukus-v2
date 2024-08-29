@@ -105,5 +105,5 @@ Route::get('/export-pelanggaran', [ExportSystemController::class, 'exportPelangg
 Route::get('/export-students', [ExportSystemController::class, 'exportStudents'])->name('export.students');
 
 
-
-
+// serach and pagination feature
+Route::get('/students/data', [StudentController::class, 'getData'])->name('students.data');
