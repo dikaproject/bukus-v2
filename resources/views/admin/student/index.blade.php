@@ -24,11 +24,6 @@
                         </a>
                     </div>
                     <div class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
-                        <form class="d-flex me-3" method="GET" action="{{ route('students.index') }}">
-                            <input type="text" class="form-control" name="search" placeholder="Search by NIS & Name"
-                                value="{{ request('search') }}">
-                            <button class="btn btn-secondary ms-2" type="submit">Search</button>
-                        </form>
                         <div class="dropdown">
                             <a class="btn btn-icon btn-light-brand" data-bs-toggle="dropdown" data-bs-offset="0, 10"
                                 data-bs-auto-close="outside">
@@ -62,7 +57,6 @@
                 <div class="card">
                     <div class="card-header">
                         <h5>Upload Students File</h5>
-
                     </div>
                     <div class="card-body">
                         <form id="fileUploadForm">
@@ -79,7 +73,6 @@
         </div>
         <!-- [ Upload Form ] end -->
 
-
         <!-- [ Main Content ] start -->
         <div class="main-content mt-4">
             <div class="row">
@@ -87,7 +80,7 @@
                     <div class="card">
                         <div class="card-body p-0">
                             <div class="table-responsive">
-                                <table class="table table-hover" id="studentsTable">
+                                <table class="table table-hover">
                                     <thead>
                                         <tr>
                                             <th>NIS</th>
@@ -137,7 +130,6 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-
                                 <div>
                                     {{ $students->links('pagination::bootstrap-5') }}
                                 </div>
@@ -170,74 +162,96 @@
             background-color: #0056b3;
             border-color: #004085;
         }
-
-        .btn-secondary {
-            background-color: #6c757d;
-            border-color: #6c757d;
-        }
-
-        .btn-secondary:hover {
-            background-color: #5a6268;
-            border-color: #545b62;
-        }
     </style>
 @endsection
 
 @section('script')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script>
-        function uploadFile() {
-            const formData = new FormData(document.getElementById('fileUploadForm'));
-            Swal.fire({
-                title: 'Uploading...',
-                html: 'Please wait while the file is being uploaded.',
-                timerProgressBar: true,
-                didOpen: () => {
-                    Swal.showLoading()
-                }
-            });
+        $(document).ready(function() {
+                    $('#studentTable').DataTable({
+                        "pagingType": "full_numbers", // Paging style
+                        "lengthChange": true, // Allow user to change record count
+                        "searching": true, // Enable search
+                        "ordering": true, // Enable sorting
+                        "info": true, // Show table info
+                        "autoWidth": false, // Disable auto column width
+                        "responsive": true, // Enable responsiveness
+                        language: {
+                            search: "_INPUT_",
+                            searchPlaceholder: "Cari siswa..."
+                        }
+                    });
 
-            fetch('{{ route('students.import') }}', {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    Swal.close();
-                    if (data.success) {
-                        Swal.fire('Success', 'Students imported successfully', 'success').then(() => {
-                            window.location.href = "{{ route('students.index') }}";
+                    function uploadFile() {
+                        const formData = new FormData(document.getElementById('fileUploadForm'));
+                        Swal.fire({
+                            title: 'Uploading...',
+                            html: 'Please wait while the file is being uploaded.',
+                            timerProgressBar: true,
+                            didOpen: () => {
+                                Swal.showLoading()
+                            }
                         });
-                    } else {
-                        Swal.fire('Error', 'Failed to import Students', 'error');
+
+                        fetch('{{ route('students.import') }}', {
+                                method: 'POST',
+                                body: formData,
+                                headers: {
+                                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
+                                        'content')
+                                }
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                Swal.close();
+                                if (data.success) {
+                                    Swal.fire('Success', 'Students imported successfully', 'success').then(() => {
+                                        window.location.href = "{{ route('students.index') }}";
+                                    });
+                                } else {
+                                    Swal.fire('Error', 'Failed to import Students', 'error');
+                                }
+                            })
+                            .catch(error => {
+                                Swal.fire('Error', 'Network or server error', 'error');
+                            });
                     }
-                })
-                .catch(error => {
-                    Swal.fire('Error', 'Network or server error', 'error');
-                });
+    </script>
+@endsection
+
+@section('css-script')
+<link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
+    <style>
+        /* Optional: Adjust spacing and layout for upload form and table */
+        .card {
+            margin-bottom: 20px;
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const searchInput = document.getElementById('searchInput');
+        /* Optional: Enhance button appearance */
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
 
-            searchInput.addEventListener('keyup', function() {
-                let value = this.value.toLowerCase();
-                let tableRows = document.querySelectorAll('#studentsTable tbody tr');
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
 
-                tableRows.forEach(row => {
-                    // Adjust these indices based on your actual table layout
-                    let nisText = row.cells[0].textContent.toLowerCase(); // Index for NIS
-                    let nameText = row.cells[1].textContent.toLowerCase(); // Index for Name
-                    if (nisText.includes(value) || nameText.includes(value)) {
-                        row.style.display = '';
-                    } else {
-                        row.style.display = 'none';
-                    }
-                });
-            });
-        });
-    </script>
+        /* Style adjustments for DataTables */
+        table.dataTable thead th,
+        table.dataTable thead td {
+            padding: 10px 18px;
+            /* adjust padding */
+            border-bottom: 1px solid #ddd;
+            /* consistent border */
+        }
+
+        table.dataTable.no-footer {
+            border-bottom: none;
+            /* remove bottom border */
+        }
+    </style>
 @endsection
