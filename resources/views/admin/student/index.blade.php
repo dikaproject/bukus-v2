@@ -108,7 +108,7 @@
                                                         <div class="dropdown-menu dropdown-menu-end">
                                                             <a href="{{ route('students.edit', $student->id) }}"
                                                                 class="dropdown-item"><i class="feather-edit"></i>Edit</a>
-                                                            <a href="{{ route('students.show', $student->id) }}"
+                                                            <a href="{{ route('students.detail', $student->id) }}"
                                                                 class="dropdown-item"><i class="feather-eye"></i>View</a>
                                                             <form action="{{ route('students.destroy', $student->id) }}"
                                                                 method="POST" class="d-inline"
@@ -118,13 +118,7 @@
                                                                 <button type="submit" class="dropdown-item"><i
                                                                         class="feather-trash-2"></i>Delete</button>
                                                             </form>
-                                                            <form
-                                                                action="{{ route('students.reset-password', $student->id) }}"
-                                                                method="POST">
-                                                                @csrf
-                                                                <button type="submit" class="btn btn-warning">Reset
-                                                                    Password</button>
-                                                            </form>
+                                                           
                                                         </div>
                                                     </div>
                                                 </td>

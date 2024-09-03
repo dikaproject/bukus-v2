@@ -40,7 +40,6 @@ class StudentController extends Controller
         $request->validate([
             'nis' => 'required|unique:students,nis',
             'name' => 'required|string|max:255',
-            'tanggal' => 'required|date',
             'email' => 'required|string|email|max:255|unique:students,email',
             'password' => 'required|string|min:8',
             'kelas' => 'required|string|max:255',
@@ -52,7 +51,6 @@ class StudentController extends Controller
         Student::create([
             'nis' => $request->nis,
             'name' => $request->name,
-            'tanggal' => $request->tanggal,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'kelas' => $request->kelas,
