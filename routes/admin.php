@@ -93,6 +93,8 @@ Route::post('students/{id}/reset-password', [StudentController::class, 'resetPas
 Route::get('/students/search', [StudentController::class, 'search'])->name('students.search');
 Route::get('/students/check', [StudentController::class, 'checkName'])->name('students.check');
 Route::post('students/import', [StudentController::class, 'import'])->name('students.import')->middleware('check.role:admin,leader,teacher,walas');
+// student detail
+Route::get('students/{student}/detail', [StudentController::class, 'detail'])->name('students.detail')->middleware('check.role:admin,leader,teacher,walas');
 
 Route::middleware('auth:student')->group(function () {
     Route::get('/complete-profile', [StudentProfileController::class, 'edit'])->name('students.complete.profile');

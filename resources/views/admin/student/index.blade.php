@@ -108,6 +108,8 @@
                                                         <div class="dropdown-menu dropdown-menu-end">
                                                             <a href="{{ route('students.edit', $student->id) }}"
                                                                 class="dropdown-item"><i class="feather-edit"></i>Edit</a>
+                                                            <a href="{{ route('students.show', $student->id) }}"
+                                                                class="dropdown-item"><i class="feather-eye"></i>View</a>
                                                             <form action="{{ route('students.destroy', $student->id) }}"
                                                                 method="POST" class="d-inline"
                                                                 onsubmit="return confirm('Are you sure?')">
