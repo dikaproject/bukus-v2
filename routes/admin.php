@@ -62,6 +62,8 @@ Route::prefix('siswa')->group(function () {
 
     // pasal view siswa ( untuk siswa bisa melihat pasal yang ada )
     Route::get('/pasal', [StudentAuthController::class, 'pasal'])->name('student.pasal');
+    // about view siswa ( untuk siswa bisa melihat tentang aplikasi )
+    Route::get('/about', [StudentAuthController::class, 'about'])->name('student.about');
 });
 
 

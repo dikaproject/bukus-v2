@@ -140,4 +140,9 @@ class StudentController extends Controller
 
         return redirect()->route('students.index')->with('success', 'Password reset successfully, and email cleared.');
     }
+
+    public function detail(Student $student)
+    {
+        return view('admin.student.detail', compact('student'));
+    }
 }

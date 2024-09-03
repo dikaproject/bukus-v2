@@ -27,6 +27,11 @@ class StudentAuthController extends Controller
         return view('student.dashboard', compact('student', 'poins'));
     }
 
+    public function about()
+    {
+        return view('student.about');
+    }
+
     //  untuk siswa bisa melihat pasal yang ada
     public function pasal()
     {
