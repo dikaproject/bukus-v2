@@ -15,12 +15,12 @@
                 <li class="breadcrumb-item">Pasal</li>
             </ul>
         </div>
-        
+
     </div>
     <!-- [ page-header ] end -->
 
     <!-- [ Upload Form ] start -->
-   
+
     <!-- [ Upload Form ] end -->
 
     <!-- [ Main Content ] start -->
@@ -42,18 +42,18 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($pasals as $pasal)
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            
+                                            <td>{{ $pasal->id }}</td>
+                                            <td>{{ $pasal->jenis }}</td>
+                                            <td>{{ $pasal->kategori }}</td>
+                                            <td>{{ $pasal->kode }}</td>
+                                            <td>{{ $pasal->poin }}</td>
+                                            <td>{{ $pasal->keterangan }}</td>
                                         </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
-                            
                         </div>
                     </div>
                 </div>

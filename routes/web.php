@@ -46,10 +46,6 @@ Route::get('/siswa', function () {
     return view('student.dashboard');
 });
 
-Route::get('/pasalll', function () {
-return view('student.pasal.index');
-});
-
 Route::get('/reloadpoin', function () {
     $student = \App\Models\Student::find(1);
     $student->updatePointsAndStars();

@@ -30,8 +30,10 @@ class AdminAuthController extends Controller
     // Total Pasal: Jumlah semua pasal yang terdaftar
     $totalPasal = Pasal::count();
 
-    // Total Siswa Belum Install: Siswa dengan email null
-    $totalSiswaBelumInstall = Student::whereNull('email')->count();
+    // Total Siswa Belum Install: Siswa dengan email null atau kosong
+    $totalSiswaBelumInstall = Student::where(function ($query) {
+        $query->whereNull('email')->orWhere('email', '');
+    })->count();
 
     return view('admin.dashboard', compact('totalPelanggar', 'rankingPoin', 'totalPasal', 'totalSiswaBelumInstall'));
 }

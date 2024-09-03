@@ -48,14 +48,20 @@ Route::prefix('admin')->group(function () {
 
 
 /* student routes */
-Route::middleware('student')->group(function () {
-    Route::get('/siswa', [StudentAuthController::class, 'dashboard'])->name('student_dashboard');
+Route::middleware(['student'])->group(function () {
+    Route::get('/student/dashboard', [StudentAuthController::class, 'dashboard'])->name('student.dashboard');
+    // Add other routes that require student authentication here
 });
+
+
 
 Route::prefix('siswa')->group(function () {
     Route::get('/login', [StudentAuthController::class, 'login'])->name('student_login');
     Route::post('/login-submit', [StudentAuthController::class, 'login_submit'])->name('student_login_submit');
     Route::post('/logout', [StudentAuthController::class, 'logout'])->name('student_logout');
+
+    // pasal view siswa ( untuk siswa bisa melihat pasal yang ada )
+    Route::get('/pasal', [StudentAuthController::class, 'pasal'])->name('student.pasal');
 });
 
 
@@ -83,6 +89,7 @@ Route::get('/settings/poins-siswa', [SettingsController::class, 'showSiswa'])->n
 Route::resource('students', StudentController::class)->middleware('check.role:admin,leader,teacher,walas');
 Route::post('students/{id}/reset-password', [StudentController::class, 'resetPassword'])->name('students.reset-password');
 Route::get('/students/search', [StudentController::class, 'search'])->name('students.search');
+Route::get('/students/check', [StudentController::class, 'checkName'])->name('students.check');
 Route::post('students/import', [StudentController::class, 'import'])->name('students.import')->middleware('check.role:admin,leader,teacher,walas');
 
 Route::middleware('auth:student')->group(function () {
@@ -105,5 +112,3 @@ Route::get('/export-pelanggaran', [ExportSystemController::class, 'exportPelangg
 Route::get('/export-students', [ExportSystemController::class, 'exportStudents'])->name('export.students');
 
 
-// serach and pagination feature
-Route::get('/students/data', [StudentController::class, 'getData'])->name('students.data');

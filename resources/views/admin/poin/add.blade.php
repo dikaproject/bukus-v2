@@ -46,7 +46,7 @@
                                 @csrf
                                 <div class="mb-3">
                                     <label for="student" class="form-label">Student Name</label>
-                                    <select name="nama" id="student" class="form-select select2">
+                                    <select name="nama" id="student" class="form-select" data-select2-selector="default">
                                         @foreach ($students as $student)
                                             <option value="{{ $student->name }}">{{ $student->name }}</option>
                                         @endforeach
@@ -54,7 +54,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="pasal" class="form-label">Pasal Code</label>
-                                    <select name="kode" id="pasal" class="form-select">
+                                    <select name="kode" id="pasal" data-select2-selector="default" class="form-select">
                                         @foreach ($pasals as $pasal)
                                             <option value="{{ $pasal->kode }}">{{ $pasal->kode }} -
                                                 {{ $pasal->keterangan }}</option>
@@ -78,36 +78,4 @@
         </div>
         <!-- [ Main Content ] end -->
     </div>
-@endsection
-@section('script')
-<script>
-    $(document).ready(function() {
-        $('.select2').select2({
-            placeholder: "Select a student",
-            allowClear: true,
-            width: '100%' // Ini untuk membuat lebar Select2 menyesuaikan dengan kontainer
-        });
-    });
-</script>
-
-<script>
-    $('#studentSelect').select2({
-        placeholder: "Search for a student",
-        ajax: {
-            url: '{{ route("students.search") }}', // URL ke route yang menghandle pencarian siswa
-            dataType: 'json',
-            delay: 250, // Delay antara ketik dan permintaan AJAX
-            processResults: function (data) {
-                return {
-                    results: data.map(function (item) {
-                        return { id: item.id, text: item.name }; // Sesuaikan dengan struktur data yang dikembalikan server
-                    })
-                };
-            },
-            cache: true
-        },
-        minimumInputLength: 1 // Pengguna harus mengetik minimal 1 karakter untuk memicu AJAX
-    });
-    </script>
-
 @endsection

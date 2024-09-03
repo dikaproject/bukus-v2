@@ -25,6 +25,10 @@
     <!--! END: Vendors CSS-->
     <!--! BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/theme.min.css')}}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/css/select2.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/css/select2-theme.min.css')}}">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
     <style>
         html, body {
             height: 100%;
@@ -81,6 +85,8 @@
     <script src="{{ asset('assets/vendors/js/daterangepicker.min.js')}}"></script>
     <script src="{{ asset('assets/vendors/js/apexcharts.min.js')}}"></script>
     <script src="{{ asset('assets/vendors/js/circle-progress.min.js')}}"></script>
+    <script src="{{ asset('assets/vendors/js/select2.min.js')}}"></script>
+    <script src="{{ asset('assets/vendors/js/select2-active.min.js')}}"></script>
     <!--! END: Vendors JS !-->
     <!--! BEGIN: Apps Init  !-->
     <script src="{{ asset('assets/js/common-init.min.js')}}"></script>

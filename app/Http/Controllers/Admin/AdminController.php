@@ -11,9 +11,18 @@ use RealRashid\SweetAlert\Facades\Alert as Swal;
 
 class AdminController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $admins = Admin::all();
+        $query = Admin::query();
+
+        if ($search = $request->input('search')) {
+            $query->where(function ($q) use ($search) {
+                $q->where('nik', 'LIKE', "%{$search}%")
+                    ->orWhere('name', 'LIKE', "%{$search}%");
+            });
+        }
+
+        $admins = $query->paginate(15);
         return view('admin.teacher.index', compact('admins'));
     }
 

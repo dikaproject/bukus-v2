@@ -16,9 +16,10 @@
     <div class="page-header-right ms-auto">
         <div class="page-header-right-items">
             <div class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
-                <form class="d-flex me-3" action="" method="GET">
-                    <input type="text" name="search" class="form-control" placeholder="Search Students...">
-                    <button type="submit" class="btn btn-secondary ms-2">Search</button>
+                <form class="d-flex me-3" method="GET" action="{{ route('students.index') }}">
+                    <input type="text" class="form-control" name="search" placeholder="Search by NIS & Name"
+                        value="{{ request('search') }}">
+                    <button class="btn btn-secondary ms-2" type="submit">Search</button>
                 </form>
                 <div class="dropdown">
                     <a class="btn btn-icon btn-light-brand" data-bs-toggle="dropdown" data-bs-offset="0, 10"
@@ -72,6 +73,9 @@
 
                     </tbody>
                 </table>
+                <div>
+                    {{ $students->links('pagination::bootstrap-5') }}
+                </div>
             </div>
         </div>
     </div>

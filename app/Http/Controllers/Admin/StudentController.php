@@ -12,9 +12,21 @@ use RealRashid\SweetAlert\Facades\Alert as Swal;
 
 class StudentController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $students = Student::paginate(10);
+        $query = Student::query();
+
+        if ($search = $request->input('search')) {
+            $query->where(function ($q) use ($search) {
+                $q->where('nis', 'LIKE', "%{$search}%")
+                    ->orWhere('name', 'LIKE', "%{$search}%")
+                    ->orWhere('kelas', 'LIKE', "%{$search}%")
+                    ->orWhere('jurusan', 'LIKE', "%{$search}%");
+            });
+        }
+
+        $students = $query->paginate(30);
+
         return view('admin.student.index', compact('students'));
     }
 
@@ -106,10 +118,15 @@ class StudentController extends Controller
 
     public function search(Request $request)
     {
-        $search = $request->get('q');
-        $result = Student::where('name', 'LIKE', "%$search%")->get();
+        $query = $request->input('q');
 
-        return response()->json($result);
+        if (!$query) {
+            return response()->json([]);
+        }
+
+        $students = Student::where('name', 'LIKE', '%' . $query . '%')->get();
+
+        return response()->json($students);
     }
 
     public function resetPassword($id)

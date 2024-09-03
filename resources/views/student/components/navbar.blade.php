@@ -22,7 +22,7 @@
                     </a>
                 </li>
                 <li class="nxl-item nxl-hasmenu">
-                    <a href="/pasalll" class="nxl-link">
+                    <a href="{{ route('student.pasal') }}" class="nxl-link">
                         <span class="nxl-micon"><i class="feather-book"></i></span>
                         <span class="nxl-mtext">Pasal</span><span class="nxl-arrow"></span>
                     </a>
