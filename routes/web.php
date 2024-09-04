@@ -43,7 +43,7 @@ Route::get('datapoin', function () {
 });
 
 Route::get('/siswa', function () {
-    return view('student.dashboard');
+    return view('student.dashboard')->name('eazy');
 });
 
 Route::get('/reloadpoin', function () {

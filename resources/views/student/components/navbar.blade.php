@@ -28,7 +28,7 @@
                     </a>
                 </li>
                 <li class="nxl-item nxl-hasmenu">
-                    <a href="/pasalll" class="nxl-link">
+                    <a href="{{route('student.about')}}" class="nxl-link">
                         <span class="nxl-micon"><i class="feather-book"></i></span>
                         <span class="nxl-mtext">Tentang</span><span class="nxl-arrow"></span>
                     </a>

@@ -324,29 +324,185 @@
         opacity: 1;
       }
     }
+/* Default navbar styling */
+nav {
+    padding-block: 2rem 0;
+    padding-inline: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.hamburger {
+    display: none;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.mobile-menu {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--text-dark);
+    z-index: 999;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.mobile-menu ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.mobile-menu ul li a {
+    color: var(--white);
+    font-size: 1.5rem;
+}
+
+.mobile-menu ul li .dropdown-menu {
+    background-color: var(--text-dark);
+}
+
+@media only screen and (max-width: 768px) {
+    .nav__links {
+        display: none;
+    }
+
+    .hamburger {
+        display: block;
+    }
+}
+
+.hamburger {
+    display: none;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 1000; /* Pastikan ini lebih tinggi dari elemen lainnya */
+}
+
+/* Pastikan menu muncul saat .active ditambahkan */
+.mobile-menu.active {
+    display: flex;
+}
+
+/* Tambahkan ini agar hamburger muncul pada layar kecil */
+@media only screen and (max-width: 768px) {
+    .nav__links {
+        display: none;
+    }
+
+    .hamburger {
+        display: block;
+    }
+}
+.hamburger-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--white);
+    z-index: 1001;
+}
+.mobile-menu {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--text-dark);
+    z-index: 999;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out; /* Tambah transisi smooth */
+}
+
+.mobile-menu.active {
+    display: flex;
+    opacity: 1;
+}
+.mobile-menu ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.mobile-menu ul li a {
+    color: var(--white);
+    font-size: 1.5rem;
+    padding: 1rem;
+    transition: color 0.3s;
+}
+
+.mobile-menu ul li a:hover {
+    color: var(--primary-color);
+}
+
   </style>
   <body>
     <div class="container">
-        <nav>
-            <ul class="nav__links nav__left">
-              <li><a href="#" class="logo">Buku Saku</a></li>
-              <li><a href="https://mylms.telkomschools.sch.id/login/index.php">Mylms</a></li>
-              <li><a href="https://igracias.telkomschools.sch.id/ts/login/">Igracias</a></li>
-              <li><a href="https://lions.smktelkom-pwt.sch.id/">Lions</a></li>
-            </ul>
-            <ul class="nav__links nav__right">
-              <li class="nav-item dropdown">
+      <nav>
+        <ul class="nav__links nav__left">
+            <li><a href="#" class="logo">Buku Saku</a></li>
+            <li><a href="https://mylms.telkomschools.sch.id/login/index.php">Mylms</a></li>
+            <li><a href="https://igracias.telkomschools.sch.id/ts/login/">Igracias</a></li>
+            <li><a href="https://lions.smktelkom-pwt.sch.id/">Lions</a></li>
+        </ul>
+        <ul class="nav__links nav__right">
+            <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="loginDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Login/Register
+                    Login/Register
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="loginDropdown">
-                  <li><a class="dropdown-item" href="{{ route('student_login') }}">Login sebagai Siswa</a></li>
-                  <li><a class="dropdown-item" href="{{ route('admin_login') }}">Login sebagai Guru</a></li>
-                  <li><a class="dropdown-item" href="{{ route('login') }}">Login sebagai Admin</a></li>
+                    <li><a class="dropdown-item" href="{{ route('student_login') }}">Login sebagai Siswa</a></li>
+                    <li><a class="dropdown-item" href="{{ route('admin_login') }}">Login sebagai Guru</a></li>
+                    <li><a class="dropdown-item" href="{{ route('login') }}">Login sebagai Admin</a></li>
                 </ul>
-              </li>
-            </ul>
-          </nav>
+            </li>
+        </ul>
+        <div class="hamburger">
+            <i class="ri-menu-line"></i>
+        </div>
+       
+      
+    </nav>
+    
+    <div class="mobile-menu">
+        <ul>
+            <li><a href="#" class="logo">Buku Saku</a></li>
+            <li><a href="https://mylms.telkomschools.sch.id/login/index.php">Mylms</a></li>
+            <li><a href="https://igracias.telkomschools.sch.id/ts/login/">Igracias</a></li>
+            <li><a href="https://lions.smktelkom-pwt.sch.id/">Lions</a></li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="mobileLoginDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Login/Register
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="mobileLoginDropdown">
+                    <li><a class="dropdown-item" href="{{ route('student_login') }}">Login sebagai Siswa</a></li>
+                    <li><a class="dropdown-item" href="{{ route('admin_login') }}">Login sebagai Guru</a></li>
+                    <li><a class="dropdown-item" href="{{ route('login') }}">Login sebagai Admin</a></li>
+                </ul>
+            </li>
+            <div class="hamburger-close">
+              <i class="ri-close-line"></i>
+          </div>
+        </ul>
+    </div>
+    
       <span class="letter-s">K</span>
       <img src="{{asset('assets/images/smktelkomnew.png')}}" alt="header" />
       <h4 class="text__left">BU</h4>
@@ -414,6 +570,18 @@ ScrollReveal().reveal(".container .print", {
 ScrollReveal().reveal(".footer p", {
   duration: 1000,
   delay: 7000,
+});
+document.querySelector(".hamburger").addEventListener("click", function() {
+    document.querySelector(".mobile-menu").classList.toggle("active");
+});
+
+document.querySelectorAll(".mobile-menu ul li a").forEach(function(link) {
+    link.addEventListener("click", function() {
+        document.querySelector(".mobile-menu").classList.remove("active");
+    });
+});
+document.querySelector(".hamburger-close").addEventListener("click", function() {
+    document.querySelector(".mobile-menu").classList.remove("active");
 });
 
     </script>
