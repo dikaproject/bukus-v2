@@ -40,32 +40,39 @@ class Student extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function pelanggaran() {
+        return $this->hasMany(Poin::class, 'nis', 'nis')->where('jenis', 'Pelanggaran');
+    }
+
+    public function prestasi() {
+        return $this->hasMany(Poin::class, 'nis', 'nis')->where('jenis', 'Prestasi');
+    }
+
     public function poins()
     {
         return $this->hasMany(Poin::class, 'nis', 'nis');
     }
 
     public function updatePointsAndStars()
-{
-    $this->bintang = $this->calculateStars();  // Asumsi bahwa calculateStars menghitung bintang berdasarkan tpoin
-    $this->save();
-}
-
-private function calculateStars()
-{
-    if ($this->tpoin >= 100) {
-        return 5;
-    } elseif ($this->tpoin >= 85) {
-        return 4;
-    } elseif ($this->tpoin >= 70) {
-        return 3;
-    } elseif ($this->tpoin >= 50) {
-        return 2;
-    } elseif ($this->tpoin >= 30) {
-        return 1;
-    } else {
-        return 0;
+    {
+        $this->bintang = $this->calculateStars(); // Asumsi bahwa calculateStars menghitung bintang berdasarkan tpoin
+        $this->save();
     }
-}
 
+    private function calculateStars()
+    {
+        if ($this->tpoin >= 100) {
+            return 5;
+        } elseif ($this->tpoin >= 85) {
+            return 4;
+        } elseif ($this->tpoin >= 70) {
+            return 3;
+        } elseif ($this->tpoin >= 50) {
+            return 2;
+        } elseif ($this->tpoin >= 30) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 }

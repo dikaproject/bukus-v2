@@ -42,10 +42,6 @@ Route::get('datapoin', function () {
     return view('poin.index');
 });
 
-Route::get('/siswa', function () {
-    return view('student.dashboard')->name('eazy');
-});
-
 Route::get('/reloadpoin', function () {
     $student = \App\Models\Student::find(1);
     $student->updatePointsAndStars();

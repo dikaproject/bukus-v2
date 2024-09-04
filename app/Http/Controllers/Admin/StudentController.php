@@ -138,7 +138,15 @@ class StudentController extends Controller
     }
 
     public function detail(Student $student)
-    {
-        return view('admin.student.detail', compact('student'));
-    }
+{
+    // Fetch pelanggaran and prestasi
+    $pelanggaran = $student->poins()->where('jenis', 'Hukuman')->get();
+    $prestasi = $student->poins()->where('jenis', 'Prestasi')->get();
+
+    // Riwayat Pemanggilan berdasarkan pelapor
+    $riwayatPemanggilan = $student->poins()->whereNotNull('pelapor')->get();
+
+    return view('admin.student.detail', compact('student', 'pelanggaran', 'prestasi', 'riwayatPemanggilan'));
+}
+
 }

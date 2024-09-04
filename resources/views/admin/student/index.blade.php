@@ -24,6 +24,11 @@
                         </a>
                     </div>
                     <div class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
+                        <form class="d-flex me-3" method="GET" action="{{ route('students.index') }}">
+                            <input type="text" class="form-control" name="search" placeholder="Search by NIK & Name"
+                                value="{{ request('search') }}">
+                            <button class="btn btn-secondary ms-2" type="submit">Search</button>
+                        </form>
                         <div class="dropdown">
                             <a class="btn btn-icon btn-light-brand" data-bs-toggle="dropdown" data-bs-offset="0, 10"
                                 data-bs-auto-close="outside">
@@ -118,7 +123,16 @@
                                                                 <button type="submit" class="dropdown-item"><i
                                                                         class="feather-trash-2"></i>Delete</button>
                                                             </form>
-                                                           
+                                                            {{-- Reset Password --}}
+                                                            <form
+                                                                action="{{ route('students.reset-password', $student->id) }}"
+                                                                method="POST" class="d-inline"
+                                                                onsubmit="return confirm('Are you sure?')">
+                                                                @csrf
+                                                                <button type="submit" class="dropdown-item"><i
+                                                                        class="feather-trash-2"></i>Reset Password</button>
+                                                            </form>
+
                                                         </div>
                                                     </div>
                                                 </td>
@@ -218,7 +232,7 @@
 @endsection
 
 @section('css-script')
-<link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
     <style>
         /* Optional: Adjust spacing and layout for upload form and table */
         .card {

@@ -16,7 +16,7 @@
                     <label>Navigation</label>
                 </li>
                 <li class="nxl-item">
-                    <a href="/siswa" class="nxl-link">
+                    <a href="{{ route('student.dashboard') }}" class="nxl-link">
                         <span class="nxl-micon"><i class="feather-cast"></i></span>
                         <span class="nxl-mtext">Home</span>
                     </a>

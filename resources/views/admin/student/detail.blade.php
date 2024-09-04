@@ -81,28 +81,29 @@
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover">
-                        <thead class="">
+                        <thead>
                             <tr>
                                 <th>No</th>
                                 <th>NIS</th>
                                 <th>Nama</th>
-                                <th>Poin</th>
                                 <th>Tanggal</th>
+                                <th>Pelapor</th>
                                 <th>Level</th>
-                                <th>TIM.Dis</th>
+                                <th>Pesan</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($riwayatPemanggilan as $riwayat)
                             <tr>
-                                <td>1</td>
-                                <td>123456</td>
-                                <td>John Doe</td>
-                                <td>85</td>
-                                <td>2023-09-01</td>
-                                <td>2</td>
-                                <td>A</td>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $riwayat->nis }}</td>
+                                <td>{{ $riwayat->nama }}</td>
+                                <td>{{ $riwayat->tanggal }}</td>
+                                <td>{{ $riwayat->pelapor }}</td>
+                                <td>{{ $riwayat->kode }}</td>
+                                <td>{{ $riwayat->pesan }}</td>
                             </tr>
-                            <!-- Tambahkan data lainnya di sini -->
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -111,36 +112,76 @@
     </div>
 </div>
 
-<!-- Section Riwayat Point -->
+<!-- Section Poin Pelanggaran -->
 <div class="row">
     <div class="col-lg-12">
-        <div class="card">
+        <div class="card mb-4">
             <div class="card-header">
-                <h4 class="card-title">Riwayat Point</h4>
+                <h4 class="card-title">Riwayat Poin Pelanggaran</h4>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover">
-                        <thead class="">
+                        <thead>
                             <tr>
                                 <th>No</th>
                                 <th>NIS</th>
                                 <th>Nama</th>
                                 <th>Kelas</th>
                                 <th>Kode</th>
-                                <th>Point</th>
+                                <th>Poin</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($pelanggaran as $poin)
                             <tr>
-                                <td>1</td>
-                                <td>123456</td>
-                                <td>John Doe</td>
-                                <td>XII RPL 2</td>
-                                <td>101</td>
-                                <td>85</td>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $poin->nis }}</td>
+                                <td>{{ $poin->nama }}</td>
+                                <td>{{ $poin->kelas }}</td>
+                                <td>{{ $poin->kode }}</td>
+                                <td>{{ $poin->poin }}</td>
                             </tr>
-                            <!-- Tambahkan data lainnya di sini -->
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Section Poin Prestasi -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4 class="card-title">Riwayat Poin Prestasi</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>NIS</th>
+                                <th>Nama</th>
+                                <th>Kelas</th>
+                                <th>Kode</th>
+                                <th>Poin</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($prestasi as $poin)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $poin->nis }}</td>
+                                <td>{{ $poin->nama }}</td>
+                                <td>{{ $poin->kelas }}</td>
+                                <td>{{ $poin->kode }}</td>
+                                <td>{{ $poin->poin }}</td>
+                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

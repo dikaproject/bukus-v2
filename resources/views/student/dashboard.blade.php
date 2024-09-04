@@ -63,11 +63,11 @@
                                     <p class="fs-12 text-muted mb-0">Kelas</p>
                                 </div>
                                 <div class="flex-fill py-3 px-4 rounded-1 d-none d-sm-block border border-dashed border-gray-5">
-                                    <h6 class="fs-15 fw-bolder">{{ $student->poins->where('jenis', 'pelanggaran')->count() }}</h6>
+                                    <h6 class="fs-15 fw-bolder">{{ $student->poins->where('jenis', 'Hukuman')->count() }}</h6>
                                     <p class="fs-12 text-muted mb-0">Pelanggaran</p>
                                 </div>
                                 <div class="flex-fill py-3 px-4 rounded-1 d-none d-sm-block border border-dashed border-gray-5">
-                                    <h6 class="fs-15 fw-bolder">{{ $student->poins->where('jenis', 'prestasi')->count() }}</h6>
+                                    <h6 class="fs-15 fw-bolder">{{ $student->poins->where('jenis', 'Prestasi')->count() }}</h6>
                                     <p class="fs-12 text-muted mb-0">Prestasi</p>
                                 </div>
                             </div>

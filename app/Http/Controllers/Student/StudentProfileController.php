@@ -29,7 +29,7 @@ class StudentProfileController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return view('student.dashboard')->with('success', 'Login Successfully.');
+        return redirect()->route('student_login')->with('success', 'Profile updated successfully.');
     }
 
 }
