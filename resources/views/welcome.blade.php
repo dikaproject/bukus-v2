@@ -404,14 +404,25 @@ nav {
     }
 }
 .hamburger-close {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    font-size: 2rem;
-    cursor: pointer;
-    color: var(--white);
-    z-index: 1001;
+   position: absolute;
+   top: 1rem;
+   right: 1rem;
+   font-size: 2rem;
+   cursor: pointer;
+   color: var(--white);
+   z-index: 1001;
 }
+
+@media (max-width: 768px) {
+  body::before {
+    font-size: 40rem; /* Adjust for smaller screens */
+  }
+
+  .container h4 {
+    font-size: 3rem; /* Reduce font size on smaller screens */
+  }
+}
+
 .mobile-menu {
     display: none;
     position: absolute;
@@ -451,6 +462,18 @@ nav {
 .mobile-menu ul li a:hover {
     color: var(--primary-color);
 }
+/* Sembunyikan menu dropdown secara default */
+.mobile-dropdown-menu {
+  display: none; /* Tidak terlihat */
+  flex-direction: column;
+  padding-left: 20px;
+}
+
+/* Tampilkan menu dropdown ketika dropdown aktif */
+.mobile-dropdown.active .mobile-dropdown-menu {
+  display: flex; /* Tampilkan saat aktif */
+}
+
 
   </style>
   <body>
@@ -482,26 +505,27 @@ nav {
     </nav>
     
     <div class="mobile-menu">
-        <ul>
-            <li><a href="#" class="logo">Buku Saku</a></li>
-            <li><a href="https://mylms.telkomschools.sch.id/login/index.php">Mylms</a></li>
-            <li><a href="https://igracias.telkomschools.sch.id/ts/login/">Igracias</a></li>
-            <li><a href="https://lions.smktelkom-pwt.sch.id/">Lions</a></li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="mobileLoginDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Login/Register
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="mobileLoginDropdown">
-                    <li><a class="dropdown-item" href="{{ route('student_login') }}">Login sebagai Siswa</a></li>
-                    <li><a class="dropdown-item" href="{{ route('admin_login') }}">Login sebagai Guru</a></li>
-                    <li><a class="dropdown-item" href="{{ route('login') }}">Login sebagai Admin</a></li>
-                </ul>
-            </li>
-            <div class="hamburger-close">
-              <i class="ri-close-line"></i>
-          </div>
-        </ul>
+      <ul>
+        <li><a href="#" class="logo">Buku Saku</a></li>
+        <li><a href="https://mylms.telkomschools.sch.id/login/index.php">Mylms</a></li>
+        <li><a href="https://igracias.telkomschools.sch.id/ts/login/">Igracias</a></li>
+        <li><a href="https://lions.smktelkom-pwt.sch.id/">Lions</a></li>
+    
+        <!-- Dropdown untuk Login/Register -->
+        <li class="mobile-dropdown">
+          <a href="#" class="dropdown-toggle">Login/Register</a>
+          <ul class="mobile-dropdown-menu">
+            <li><a href="{{ route('student_login') }}">Login sebagai Siswa</a></li>
+            <li><a href="{{ route('admin_login') }}">Login sebagai Guru</a></li>
+            <li><a href="{{ route('login') }}">Login sebagai Admin</a></li>
+          </ul>
+        </li>
+        <div class="hamburger-close">
+          <i class="ri-close-line"></i>
+        </div>
+      </ul>
     </div>
+    
     
       <span class="letter-s">K</span>
       <img src="{{asset('assets/images/smktelkomnew.png')}}" alt="header" />
@@ -583,6 +607,8 @@ document.querySelectorAll(".mobile-menu ul li a").forEach(function(link) {
 document.querySelector(".hamburger-close").addEventListener("click", function() {
     document.querySelector(".mobile-menu").classList.remove("active");
 });
+
+
 
     </script>
   </body>
