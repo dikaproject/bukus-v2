@@ -29,14 +29,16 @@ class StudentAuthController extends Controller
 
     public function about()
     {
-        return view('student.about');
+        $student = Auth::guard('student')->user();
+        return view('student.about', compact('student'));
     }
 
     //  untuk siswa bisa melihat pasal yang ada
     public function pasal()
     {
         $pasals = Pasal::all();
-        return view('student.pasal.index', compact('pasals'));
+        $student = Auth::guard('student')->user();
+        return view('student.pasal.index', compact('pasals', 'student'));
     }
 
     public function login()
