@@ -27,8 +27,7 @@
                         <div class="mb-3">
                             <label for="jabatan" class="form-label">Jabatan</label>
                             <select class="form-control" id="jabatan" name="jabatan" required>
-                                <option value="Walas">Walas</option>
-                                <option value="Guru">Guru</option>
+                                <option value="Guru">Guru ( Walas )</option>
                                 <option value="Tim Disiplin">Tim Disiplin</option>
                                 <option value="Ketua Tim Disiplin">Ketua Tim Disiplin</option>
                             </select>

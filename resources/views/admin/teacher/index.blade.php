@@ -43,10 +43,12 @@
                             </a>
                         </div>
                     </div>
+                    @cancan('teacher-create', 'web|admin')
                     <a href="{{ route('admins.create') }}" class="btn btn-primary">
                         <i class="feather-plus me-2"></i>
                         <span>Tambah Guru & Tim Disiplin</span>
                     </a>
+                    @endcancan
                 </div>
             </div>
             <div class="d-md-none d-flex align-items-center">
@@ -80,12 +82,16 @@
                                     <td>{{ $admin->email }}</td>
                                     <td>{{ $admin->jabatan }}</td>
                                     <td>
+                                        @cancan('teacher-edit', 'web|admin')
                                         <a href="{{ route('admins.edit', $admin->id) }}" class="btn btn-info btn-sm">Edit</a>
+                                        @endcancan
+                                        @cancan('teacher-delete', 'web|admin')
                                         <form action="{{ route('admins.destroy', $admin->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this Teacher?');" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                                         </form>
+                                        @endcancan
                                     </td>
                                 </tr>
                             @endforeach
