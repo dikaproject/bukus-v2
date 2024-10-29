@@ -68,12 +68,6 @@
                             @cancan('role-list', 'web|admin')
                             <li class="nxl-item"><a class="nxl-link" href="{{ route('roles.index') }}">Roles</a></li>
                             @endcancan
-                            @cancan('student-list', 'web|admin')
-                            <li class="nxl-item"><a class="nxl-link" href="{{route('settings.poins-prestasi')}}">Rekap Data Prestasi</a></li>
-                            <li class="nxl-item"><a class="nxl-link" href="{{ route('settings.poins-berbintang') }}">Rekap Siswa Berbintang</a></li>
-                            <li class="nxl-item"><a class="nxl-link" href="{{route('settings.poins-pelanggaran')}}">Rekap Data Pelanggaran</a></li>
-                            <li class="nxl-item"><a class="nxl-link" href="{{ route('settings.poins-siswa') }}">Rekap Data Siswa</a></li>
-                            @endcancan
                         </ul>
                     </li>
                     <li class="nxl-item nxl-hasmenu">
