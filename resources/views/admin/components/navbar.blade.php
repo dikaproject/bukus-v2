@@ -72,7 +72,21 @@
                             <li class="nxl-item"><a class="nxl-link" href="{{route('settings.poins-prestasi')}}">Rekap Data Prestasi</a></li>
                             <li class="nxl-item"><a class="nxl-link" href="{{ route('settings.poins-berbintang') }}">Rekap Siswa Berbintang</a></li>
                             <li class="nxl-item"><a class="nxl-link" href="{{route('settings.poins-pelanggaran')}}">Rekap Data Pelanggaran</a></li>
-                            <li class="nxl-item"><a class="nxl-link" href="">Rekap Data Siswa</a></li>
+                            <li class="nxl-item"><a class="nxl-link" href="{{ route('settings.poins-siswa') }}">Rekap Data Siswa</a></li>
+                            @endcancan
+                        </ul>
+                    </li>
+                    <li class="nxl-item nxl-hasmenu">
+                        <a href="javascript:void(0);" class="nxl-link">
+                            <span class="nxl-micon"><i class="feather-settings"></i></span>
+                            <span class="nxl-mtext">Rekap Data Management</span><span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
+                        </a>
+                        <ul class="nxl-submenu">
+                            @cancan('student-list', 'web|admin')
+                            <li class="nxl-item"><a class="nxl-link" href="{{route('settings.poins-prestasi')}}">Rekap Data Prestasi (All Siswa)</a></li>
+                            <li class="nxl-item"><a class="nxl-link" href="{{ route('settings.poins-berbintang') }}">Rekap Siswa Berbintang (Ranking)</a></li>
+                            <li class="nxl-item"><a class="nxl-link" href="{{route('settings.poins-pelanggaran')}}">Rekap Data Pelanggaran (All Siswa)</a></li>
+                            <li class="nxl-item"><a class="nxl-link" href="{{ route('settings.poins-siswa') }}">Rekap Data Siswa (Perkelas)</a></li>
                             @endcancan
                         </ul>
                     </li>

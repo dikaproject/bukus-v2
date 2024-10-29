@@ -19,6 +19,16 @@
                 <form class="d-flex me-3" method="GET" action="{{ route('students.index') }}">
                     <input type="text" class="form-control" name="search" placeholder="Search by NIS & Name"
                         value="{{ request('search') }}">
+
+                        <!-- Class Filter Dropdown -->
+                        <select name="kelas" class="form-control ms-2">
+                            <option value="">All Classes</option>
+                            @foreach($classes as $class)
+                                <option value="{{ $class }}" {{ request('kelas') == $class ? 'selected' : '' }}>
+                                    {{ $class }}
+                                </option>
+                            @endforeach
+                        </select>
                     <button class="btn btn-secondary ms-2" type="submit">Search</button>
                 </form>
                 <div class="dropdown">

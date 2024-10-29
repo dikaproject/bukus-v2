@@ -114,5 +114,6 @@ Route::get('/export-prestasi',  [ExportSystemController::class, 'exportPrestasi'
 Route::get('/export-berbintang', [ExportSystemController::class, 'exportBerbintang'])->name('export.berbintang');
 Route::get('/export-pelanggaran', [ExportSystemController::class, 'exportPelanggaran'])->name('export.pelanggaran');
 Route::get('/export-students', [ExportSystemController::class, 'exportStudents'])->name('export.students');
+Route::get('/export-siswa', [ExportSystemController::class, 'exportSiswa'])->name('export.siswa');
 
 

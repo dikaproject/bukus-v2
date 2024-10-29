@@ -3,24 +3,62 @@
 namespace App\Exports;
 
 use App\Models\Student;
-use Maatwebsite\Excel\Concerns\FromQuery;
-use Maatwebsite\Excel\Concerns\WithHeadings;
-use Maatwebsite\Excel\Concerns\WithMapping;
+use Illuminate\Support\Collection;
 
-class BerbintangExport implements FromQuery, WithHeadings, WithMapping
+class BerbintangExport extends BaseExport
 {
-    public function query()
+    /**
+     * Retrieve and transform the collection of students with Bintang.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function collection()
     {
-        return Student::query()
-            ->with('poins')
-            ->whereHas('poins', function($query) {
-                $query->where('konfirmasi', 'Benar');
-            });
+        // Initialize the query with Bintang > 0 and confirmed poins
+        $query = Student::query()
+            ->where('bintang', '>', 0)
+            ->whereHas('poins', function($q) {
+                $q->where('konfirmasi', 'Benar');
+            })
+            ->with(['poins' => function($q) {
+                $q->where('konfirmasi', 'Benar');
+            }]);
+
+        // Apply common search and kelas filters
+        $this->applyFilters($query);
+
+        // Execute the query to get the filtered students
+        $students = $query->get();
+
+        // Transform the data for Excel export
+        return $students->map(function($student, $index) {
+            // Calculate Prestasi and Pelanggaran points
+            $prestasi = $student->poins->where('jenis', 'Prestasi')->sum('poin');
+            $pelanggaran = $student->poins->where('jenis', 'Hukuman')->sum('poin');
+
+            return [
+                'No' => $index + 1,
+                'NIS' => $student->nis,
+                'Name' => $student->name,
+                'Class' => $student->kelas,
+                'Jurusan' => $student->jurusan,
+                'Poin Prestasi' => $prestasi,
+                'Poin Pelanggaran' => $pelanggaran,
+                'Total Points' => $student->tpoin,
+                'Bintang' => $student->bintang,
+            ];
+        });
     }
 
+    /**
+     * Define the headings for the Excel export.
+     *
+     * @return array
+     */
     public function headings(): array
     {
         return [
+            'No',
             'NIS',
             'Name',
             'Class',
@@ -28,23 +66,7 @@ class BerbintangExport implements FromQuery, WithHeadings, WithMapping
             'Poin Prestasi',
             'Poin Pelanggaran',
             'Total Points',
-            'Bintang'
-        ];
-    }
-
-    public function map($student): array
-    {
-        $prestasi = $student->poins->where('jenis', 'Prestasi')->where('konfirmasi', 'Benar')->sum('poin');
-        $pelanggaran = $student->poins->where('jenis', 'Hukuman')->where('konfirmasi', 'Benar')->sum('poin');
-        return [
-            $student->nis,
-            $student->name,
-            $student->kelas,
-            $student->jurusan,
-            $prestasi,
-            $pelanggaran,
-            $student->tpoin,
-            $student->bintang
+            'Bintang',
         ];
     }
 }
